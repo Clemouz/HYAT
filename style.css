@@ -1,0 +1,442 @@
+/* style.css */
+@font-face {
+  font-family: 'LogoFont'; /* Remplacez 'MaPolice' par le nom que vous souhaitez donner à la police. */
+  src: url('/fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf') format('truetype'), /* Spécifiez le chemin vers le fichier WOFF2 */
+       /* Vous pouvez également inclure d'autres formats de police si vous le souhaitez */
+}
+
+html,body{
+  min-height: 100vh; /* Ensures that html and body cover the viewport height */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-image: url("background6.png");
+  background-size: cover; /* Ensures the image fits within the drop zone */
+  background-position: center; /* Centers the image in the drop zone */
+  background-repeat: no-repeat; /* Prevents image from repeating */ 
+}
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 2em;
+  /* Ajuste la taille du titre */
+  color: white;
+  margin-left: 1%;
+  font-family: 'LogoFont'; /* Utilisez le nom de la police défini dans @font-face */
+}
+
+header {
+  width: 100%;
+  height: 15vh; /* Header takes 15% of the viewport height */
+  background-color: transparent; /* Ajoutez l'image de fond */
+  padding: 0; /* Ajustez l'espacement selon vos besoins */
+  display: flex;
+  align-items: center;
+  margin: 0;
+  border: 0;
+   /* Les valeurs sont: offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.4) brightness(0.94);
+}
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+
+}
+
+/* Style pour le titre h2 affichant le pseudo de l'utilisateur */
+#userPseudo {
+
+  color: white; /* Couleur du texte */
+  font-size: 1.5em; /* Taille du texte */
+  top: auto;
+}
+
+.navbuttons {
+  display: flex; /* Keeps the buttons side by side */
+  /* Align this div at the bottom of its container */
+}
+
+#disconnectButton {
+  /* Align this button at the top of its container */
+  margin-bottom: auto; /* Pushes the button to the top */
+  margin-top: 2%;
+  margin-left: 2%;
+  background-image: url('disconnect.png');
+  background-size: cover; /* Ensures the image covers the button */
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+  height: 40px; /* Ajustez selon la taille souhaitée */
+  width: 40px; /* Ajustez selon la taille souhaitée */
+}
+
+#createTaskContainer {
+  margin: 0 auto; /* Centrer horizontalement */ 
+  display: flex;       /* Utilisez Flexbox */
+  align-items: center; /* Centre verticalement */
+  justify-content: center;
+  height: 100%;        /* Assurez-vous que la div prend la hauteur complète de son conteneur parent */  
+}
+
+#dropZone {
+  position: absolute;
+  width: 100%;
+  height: 85vh;
+  bottom: 0%;
+  left: 0%;
+
+  /* assurez-vous que le fond d'écran couvre la div */
+  /* le fond d'écran ne doit pas se répéter */
+}
+
+#pageTitle {
+  color: white; /* Ou toute autre couleur correspondant à votre design */
+  font-size: 2em; /* Ajustez la taille du texte */
+}
+
+/* CSS */
+#openPopup {
+  align-items: center;
+  background-color: #fee6e3;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 0; /* Vous pouvez ajuster la marge ici si nécessaire */
+}
+
+#openPopup:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+#openPopup:hover:after {
+  transform: translate(0, 0);
+}
+
+#openPopup:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+#openPopup:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  #openPopup {
+    padding: 0 40px;
+  }
+}
+
+
+#popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  /* Dark background for the popup */
+  color: #fff;
+  /* Light text color for better contrast */
+  padding: 40px;
+  /* More padding for a spacious look */
+  z-index: 999;
+  border-radius: 20px;
+  text-align: center;
+  display: none;
+  border: black solid 1px;
+  /* Removing the border for a cleaner look */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  /* Adjust shadow for depth */
+  /* Adjust shadow for depth */
+  backdrop-filter: blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
+}
+
+.popup-content {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+}
+
+input[type="text"],
+textarea {
+  background-color: rgba(154, 154, 154, 0.5);
+  backdrop-filter: brightness(0.5) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
+  /* Darker background for inputs */
+  color: #fff;
+  /* Light text color */
+  width: 100%;
+  padding: 15px;
+  /* More padding for a better look */
+  margin: 10px 0;
+  border: 1px solid #555;
+  /* Subtle border for inputs */
+  border-radius: 5px;
+  outline: none;
+  box-sizing: border-box;
+  /* Include padding in width calculation */
+}
+
+.close-button {
+  background-image: url("croix.png");
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /* Ensures the image covers the button area */
+  border: none;
+  border-radius: 20%;
+  /* Optional: for a rounded button */
+  padding: 0;
+  /* No padding needed since the image is the button */
+  width: 24px;
+  /* Size of the close button */
+  height: 24px;
+  /* Size of the close button */
+  cursor: pointer;
+  position: absolute;
+  top: -12px;
+  /* Half the height of the button to move it outside the popup */
+  right: -12px;
+  /* Half the width of the button to move it outside the popup */
+  outline: none;
+  /* Removes the blue outline on focus */
+}
+
+
+.close-button:hover {
+  background-color: #e6e6e6;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+button {
+  background-color:transparent;
+  color: #202020;
+  border: black solid 2px;
+
+
+  font-size: 1em;
+  /* Ajuste la taille du texte des boutons */
+  padding: 0.5em 1em;
+  /* Ajuste le padding des boutons */
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+button:hover {
+  background-color: transparent;
+  backdrop-filter: brightness(0.95) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
+}
+
+
+.post-it {
+  background-color: #FEE9A6;
+  padding: 10px;
+  border-radius: 5px;
+  border: #202020 solid 2px;
+  cursor: move;
+  height: auto;
+  user-select: none;
+  /* Ajout de l'ombre pour le coin inférieur droit */
+  position: absolute;
+  min-width: 150px;
+  /* ou la largeur minimale que vous souhaitez */
+  max-width: 200px;
+  /* pour limiter la largeur maximum si nécessaire */
+  word-wrap: break-word;
+  /* permet de s'assurer que le texte ne dépasse pas le post-it */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease-in-out; /* Ajout de la transition pour une animation douce */
+}
+
+.post-it:hover{
+  transform: scale(1.05); /* Agrandir le post-it de 10% lorsqu'il est survolé */
+}
+
+
+
+#postItContainer {
+  position: relative;
+}
+
+.post-it.draggable {
+  /* ... Autres styles ... */
+  cursor: grab;
+  /* Curseur de main qui tient quelque chose */
+}
+
+.post-it.draggable:active {
+  cursor: grabbing;
+  /* Curseur de main qui tient quelque chose en mode glisser */
+}
+
+/* Styles pour le bouton de suppression */
+.delete-post-it {
+  background-image: url("croix.png");
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  /* Adjust padding to fit your image */
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  /* Add this to ensure the image fits within the button */
+  width: 20px;
+  /* Adjust to match your image's aspect ratio */
+  height: 20px;
+  /* Adjust to match your image's aspect ratio */
+  font-size: 0;
+}
+
+.delete-post-it:hover {
+  background-color: #ccc;
+}
+
+/* Add this to your style.css file */
+.post-it-image {
+  max-width: 100%;
+  max-height: 100%; /* Adjust as needed */
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+
+/* Conteneur pour les boutons de navigation du fond */
+.nav-buttons {
+  position: absolute;
+  right: 1rem;
+  /* Distance du bord droit du header */
+  bottom: 10px;
+  /* Distance du bord inférieur du header */
+  display: flex;
+  /* Pour aligner les boutons côte à côte */
+}
+
+/* Boutons de navigation du fond */
+#prevBackground,
+#nextBackground {
+  width: 30px;
+  height: 30px;
+  border-radius: 15%;
+  background-color: transparent;
+  color: #202020;
+  border: black solid 1px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* Espace entre les boutons */
+  outline: none;
+  /* Supprime le contour lors de la sélection */
+  margin-left: 2%;
+}
+
+#prevBackground {
+  left: 10px;
+  background-image: url('arrow-left.png');
+}
+
+#nextBackground {
+  right: 10px;
+  background-image: url('arrow-right.png');
+}
+
+/* Styles pour le hover des boutons */
+#prevBackground:hover,
+#nextBackground:hover {
+  background-color:transparent;
+  /* couleur de fond légèrement différente au survol */
+}
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.9); 
+}
+
+.modal-content {
+  position: absolute; /* Positionnement absolu par rapport à son parent positionné (le modal) */
+  top: 50%; /* Positionnement à 50% du haut du parent */
+  left: 50%; /* Positionnement à 50% de la gauche du parent */
+  transform: translate(-50%, -50%); /* Décalage pour centrer précisément l'élément */
+  max-width: 700px; /* Largeur maximale de l'image */
+  width: 80%; /* Largeur par défaut */
+  margin: auto; /* Marge automatique pour le centrage horizontal (si nécessaire) */
+  display: block; /* Affichage en bloc */
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}

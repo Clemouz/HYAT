@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post-it Dynamique</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1 id="pageTitle">HYAT?</h1>
+    <!-- Autres éléments du header -->
+  <span id="userPseudo"></span>
+    <div id="createTaskContainer">
+      <button id="openPopup">New post-it</button>
+    </div>
+    <div class="header-right">
+      <button id="disconnectButton">
+      </button>
+      <div class ="navbuttons">
+        <button id="prevBackground"></button>
+        <button id="nextBackground"></button>
+
+      </div>
+    </div>
+  </header>
+  <div id="dropZone" ondragover="dragOverHandler(event)">
+    <!-- La dropzone va ici -->
+  </div>
+  <div id="postItContainer">
+    <!-- Contenu des post-it va ici -->
+  </div>
+  <div id="popup" class="hidden">
+    <div class="popup-content">
+      <input type="text" id="titleInput" placeholder="Titre">
+      <textarea id="descriptionInput" placeholder="Description"></textarea>
+      <input type="file" id="imageInput" accept="image/*"> <!-- Bouton pour ajouter une image -->
+      <button class="close-button" id="closePopup" aria-label="Close"></button><!-- Déplacer la croix ici -->
+      <button id="addPostIt">New task</button>
+    </div>
+  </div>
+  <!-- Modal pour afficher l'image en grand -->
+  <div id="imageModal" class="modal">
+    <span id="closeModal" class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+  
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
+  <script type="module" src="auth.js"></script>
+</body>
+
+</html>
