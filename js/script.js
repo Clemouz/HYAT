@@ -1,11 +1,11 @@
 // Importing Firebase services and Firestore methods
 import { db, auth } from "./firebase.js";
-import { addDoc, collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+import { addDoc, collection, query, where, onSnapshot, deleteDoc, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
-import { deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
-import { updateDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 import { storage } from "./firebase.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+
+
 
 // Initializing and handling the DOM elements when the content is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
@@ -23,6 +23,16 @@ document.addEventListener("DOMContentLoaded", function() {
   var modal = document.getElementById("imageModal");
   var modalImg = document.getElementById("modalImage");
   var closeModal = document.getElementById("closeModal");
+
+  async function displayUserPseudo() {
+    if (!auth.currentUser) return;
+    const userRef = doc(db, "users", auth.currentUser.uid);
+    const docSnap = await getDoc(userRef);
+    if (docSnap.exists()) {
+      const userData = docSnap.data();
+      document.getElementById('userPseudo').textContent = userData.pseudo;
+    }
+  }
 
   // Function to retrieve and display post-its from Firestore
   function retrieveAndDisplayPostIts() {
@@ -252,6 +262,7 @@ closeModal.onclick = function() {
   // Listener for authentication state changes
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      displayUserPseudo();
       retrieveAndDisplayPostIts(); // Retrieve and display post-its for the authenticated user
     } else {
       console.log("L'utilisateur est déconnecté."); // Log when no user is authenticated
