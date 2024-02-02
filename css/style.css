@@ -1,21 +1,23 @@
 /* style.css */
 @font-face {
-  font-family: 'LogoFont'; /* Remplacez 'MaPolice' par le nom que vous souhaitez donner à la police. */
-  src: url('/fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf') format('truetype'), /* Spécifiez le chemin vers le fichier WOFF2 */
-       /* Vous pouvez également inclure d'autres formats de police si vous le souhaitez */
+  font-family: "LogoFont"; /* Remplacez 'MaPolice' par le nom que vous souhaitez donner à la police. */
+  src: url("/fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf")
+    format("truetype"); /* Spécifiez le chemin vers le fichier WOFF2 */
+  /* Vous pouvez également inclure d'autres formats de police si vous le souhaitez */
 }
 
-html,body{
+html,
+body {
   min-height: 100vh; /* Ensures that html and body cover the viewport height */
   margin: 0;
   padding: 0;
 }
 
 html {
-  background-image: url("background6.png");
+  background-image: url("/img/background6.png");
   background-size: cover; /* Ensures the image fits within the drop zone */
   background-position: center; /* Centers the image in the drop zone */
-  background-repeat: no-repeat; /* Prevents image from repeating */ 
+  background-repeat: no-repeat; /* Prevents image from repeating */
 }
 body {
   font-family: Arial, sans-serif;
@@ -30,7 +32,7 @@ h1 {
   /* Ajuste la taille du titre */
   color: white;
   margin-left: 1%;
-  font-family: 'LogoFont'; /* Utilisez le nom de la police défini dans @font-face */
+  font-family: "LogoFont"; /* Utilisez le nom de la police défini dans @font-face */
 }
 
 header {
@@ -42,7 +44,7 @@ header {
   align-items: center;
   margin: 0;
   border: 0;
-   /* Les valeurs sont: offset-x | offset-y | blur-radius | spread-radius | color */
+  /* Les valeurs sont: offset-x | offset-y | blur-radius | spread-radius | color */
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(0.4) brightness(0.94);
 }
@@ -52,12 +54,10 @@ header {
   align-items: center;
   height: 100%;
   justify-content: center;
-
 }
 
 /* Style pour le titre h2 affichant le pseudo de l'utilisateur */
 #userPseudo {
-
   color: white; /* Couleur du texte */
   font-size: 1.5em; /* Taille du texte */
   top: auto;
@@ -73,7 +73,7 @@ header {
   margin-bottom: auto; /* Pushes the button to the top */
   margin-top: 2%;
   margin-left: 2%;
-  background-image: url('disconnect.png');
+  background-image: url("/img/disconnect.png");
   background-size: cover; /* Ensures the image covers the button */
   background-position: center;
   background-repeat: no-repeat;
@@ -84,11 +84,11 @@ header {
 }
 
 #createTaskContainer {
-  margin: 0 auto; /* Centrer horizontalement */ 
-  display: flex;       /* Utilisez Flexbox */
+  margin: 0 auto; /* Centrer horizontalement */
+  display: flex; /* Utilisez Flexbox */
   align-items: center; /* Centre verticalement */
   justify-content: center;
-  height: 100%;        /* Assurez-vous que la div prend la hauteur complète de son conteneur parent */  
+  height: 100%; /* Assurez-vous que la div prend la hauteur complète de son conteneur parent */
 }
 
 #dropZone {
@@ -117,7 +117,7 @@ header {
   color: #111;
   cursor: pointer;
   display: flex;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 16px;
   height: 48px;
   justify-content: center;
@@ -133,40 +133,154 @@ header {
   margin: 0; /* Vous pouvez ajuster la marge ici si nécessaire */
 }
 
-#openPopup:after {
-  background-color: #111;
+#openPopup {
+  position: relative;
+  padding: 12px 35px;
+  background: #ffffff;
+  font-size: 125%;
+  color: #181818;
   border-radius: 8px;
-  content: "";
-  display: block;
-  height: 48px;
-  left: 0;
-  width: 100%;
+  box-shadow: 0 0 0 #f1f1f18c;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  border: black solid 2px;
+}
+
+.star-1 {
   position: absolute;
-  top: -2px;
-  transform: translate(8px, 8px);
-  transition: transform .2s ease-out;
-  z-index: -1;
+  top: 20%;
+  left: 20%;
+  width: 25px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 1s cubic-bezier(0.05, 0.83, 0.43, 0.96);
 }
 
-#openPopup:hover:after {
-  transform: translate(0, 0);
+.star-2 {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 1s cubic-bezier(0, 0.4, 0, 1.01);
 }
 
-#openPopup:active {
-  background-color: #ffdeda;
-  outline: 0;
+.star-3 {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 1s cubic-bezier(0, 0.4, 0, 1.01);
+}
+
+.star-4 {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  width: 8px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.8s cubic-bezier(0, 0.4, 0, 1.01);
+}
+
+.star-5 {
+  position: absolute;
+  top: 25%;
+  left: 45%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.6s cubic-bezier(0, 0.4, 0, 1.01);
+}
+
+.star-6 {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 0 #fffdef);
+  z-index: -5;
+  transition: all 0.8s ease;
 }
 
 #openPopup:hover {
-  outline: 0;
+  background: transparent;
+  color: #000000;
+  box-shadow: 0 0 25px #e2e2e28c;
 }
 
-@media (min-width: 768px) {
-  #openPopup {
-    padding: 0 40px;
-  }
+#openPopup:hover .star-1 {
+  position: absolute;
+  top: -80%;
+  left: -30%;
+  width: 25px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
 }
 
+#openPopup:hover .star-2 {
+  position: absolute;
+  top: -25%;
+  left: 10%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+#openPopup:hover .star-3 {
+  position: absolute;
+  top: 55%;
+  left: 25%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+#openPopup:hover .star-4 {
+  position: absolute;
+  top: 30%;
+  left: 80%;
+  width: 8px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+#openPopup:hover .star-5 {
+  position: absolute;
+  top: 25%;
+  left: 115%;
+  width: 15px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+#openPopup:hover .star-6 {
+  position: absolute;
+  top: 5%;
+  left: 60%;
+  width: 5px;
+  height: auto;
+  filter: drop-shadow(0 0 10px #fffdef);
+  z-index: 2;
+}
+
+.fil0 {
+  fill: #fffdef;
+}
 
 #popup {
   position: fixed;
@@ -188,7 +302,9 @@ header {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   /* Adjust shadow for depth */
   /* Adjust shadow for depth */
-  backdrop-filter: blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
+  backdrop-filter: blur(
+    4px
+  ); /* Applique un flou de 5 pixels à l'arrière-plan */
 }
 
 .popup-content {
@@ -199,7 +315,7 @@ header {
 
 input[type="text"],
 textarea {
-  background-color: rgba(154, 154, 154, 0.5);
+  background-color: rgba(185, 185, 185, 0.5);
   backdrop-filter: brightness(0.5) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
   /* Darker background for inputs */
   color: #fff;
@@ -208,7 +324,7 @@ textarea {
   padding: 15px;
   /* More padding for a better look */
   margin: 10px 0;
-  border: 1px solid #555;
+  border: 1px solid #141414;
   /* Subtle border for inputs */
   border-radius: 5px;
   outline: none;
@@ -217,7 +333,7 @@ textarea {
 }
 
 .close-button {
-  background-image: url("croix.png");
+  background-image: url("/img/croix.png");
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: center;
@@ -242,7 +358,6 @@ textarea {
   /* Removes the blue outline on focus */
 }
 
-
 .close-button:hover {
   background-color: #e6e6e6;
 }
@@ -258,10 +373,9 @@ textarea {
 }
 
 button {
-  background-color:transparent;
+  background-color: transparent;
   color: #202020;
   border: black solid 2px;
-
 
   font-size: 1em;
   /* Ajuste la taille du texte des boutons */
@@ -277,9 +391,8 @@ button:hover {
   backdrop-filter: brightness(0.95) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
 }
 
-
 .post-it {
-  background-color: #FEE9A6;
+  background-color: #fee9a6;
   padding: 10px;
   border-radius: 5px;
   border: #202020 solid 2px;
@@ -298,11 +411,9 @@ button:hover {
   transition: transform 0.2s ease-in-out; /* Ajout de la transition pour une animation douce */
 }
 
-.post-it:hover{
+.post-it:hover {
   transform: scale(1.05); /* Agrandir le post-it de 10% lorsqu'il est survolé */
 }
-
-
 
 #postItContainer {
   position: relative;
@@ -321,7 +432,7 @@ button:hover {
 
 /* Styles pour le bouton de suppression */
 .delete-post-it {
-  background-image: url("croix.png");
+  background-image: url("/img/croix.png");
   background-color: transparent;
   border: none;
   border-radius: 50%;
@@ -354,7 +465,6 @@ button:hover {
   margin: 0 auto;
   border-radius: 5px;
 }
-
 
 /* Conteneur pour les boutons de navigation du fond */
 .nav-buttons {
@@ -392,39 +502,42 @@ button:hover {
 
 #prevBackground {
   left: 10px;
-  background-image: url('arrow-left.png');
+  background-image: url("/img/arrow-left.png");
 }
 
 #nextBackground {
   right: 10px;
-  background-image: url('arrow-right.png');
+  background-image: url("/img/arrow-right.png");
 }
 
 /* Styles pour le hover des boutons */
 #prevBackground:hover,
 #nextBackground:hover {
-  background-color:transparent;
+  background-color: transparent;
   /* couleur de fond légèrement différente au survol */
 }
 
 .modal {
-  display: none; 
-  position: fixed; 
-  z-index: 1; 
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   overflow: auto;
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.9); 
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modal-content {
   position: absolute; /* Positionnement absolu par rapport à son parent positionné (le modal) */
   top: 50%; /* Positionnement à 50% du haut du parent */
   left: 50%; /* Positionnement à 50% de la gauche du parent */
-  transform: translate(-50%, -50%); /* Décalage pour centrer précisément l'élément */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Décalage pour centrer précisément l'élément */
   max-width: 700px; /* Largeur maximale de l'image */
   width: 80%; /* Largeur par défaut */
   margin: auto; /* Marge automatique pour le centrage horizontal (si nécessaire) */

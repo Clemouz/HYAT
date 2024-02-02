@@ -1,0 +1,238 @@
+@font-face {
+  font-family: "LogoFont"; /* Remplacez 'MaPolice' par le nom que vous souhaitez donner à la police. */
+  src: url("/fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf")
+    format("truetype"); /* Spécifiez le chemin vers le fichier WOFF2 */
+  /* Vous pouvez également inclure d'autres formats de police si vous le souhaitez */
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  font-size: 3em;
+  /* Ajuste la taille du titre */
+  color: white;
+  margin: 0;
+  font-family: "LogoFont";
+}
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.left-section {
+  display: flex;
+  flex-basis: 67%;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-image: url("/img/whiteboard.jpg");
+  background-size: cover; /* Couvre toute la div */
+  background-position: center;
+  /* Add any additional styling here */
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  flex-basis: 33%;
+  background-color: #151515;
+  flex-direction: column;
+  justify-content: center;
+  /* Add any additional styling here */
+}
+
+.register-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+}
+.register-form input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+}
+.login-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+}
+.login-form input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+p {
+  color: white;
+}
+.logo {
+  display: block; /* Pour permettre la centralisation du logo */
+  margin: 0 auto; /* Centrer le logo horizontalement */
+  margin-bottom: 20%; /* Espace entre le logo et le formulaire */
+}
+::placeholder {
+  color: #969696;
+  font-size: 1em;
+  border-radius: 15%;
+}
+input {
+  padding: 10px; /* Ajustez la valeur selon vos besoins */
+  background-color: #e2e2e2;
+}
+
+#login_button {
+  width: 12rem;
+  height: 2.5rem;
+  border: none;
+  outline: none;
+  color: #151515;
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+#login_button:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+#login_button:active {
+  color: #000;
+}
+
+#login_button:hover:before {
+  opacity: 1;
+}
+
+#login_button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+#register_button {
+  width: 12rem;
+  height: 2.5rem;
+  border: none;
+  outline: none;
+  color: #151515;
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+#register_button:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+#register_button:active {
+  color: #000;
+}
+
+#register_button:hover:before {
+  opacity: 1;
+}
+
+#register_button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+/* Supprime l'effet de contour pour tous les éléments */
+*:focus {
+  outline: none;
+}

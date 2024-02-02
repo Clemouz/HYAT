@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const addPostItButton = document.getElementById("addPostIt"); // Button to add a new post-it
   const closePopupButton = document.getElementById("closePopup"); // Button to close the popup
   const dropZone = document.getElementById("dropZone"); // Area where post-its are displayed and can be dragged
-  const backgroundImages = ["background1.png", "background2.png", "background3.png", "background4.png", "background5.png","background6.png"]; // Array of background images for the application
+  const backgroundImages = ["/img/background1.png", "/img/background2.png", "/img/background3.png", "/img/background4.png", "/img/background5.png","/img/background6.png"]; // Array of background images for the application
   let currentBackgroundIndex = 0; // Index to keep track of the current background image
   // Obtenez les éléments
   var modal = document.getElementById("imageModal");
