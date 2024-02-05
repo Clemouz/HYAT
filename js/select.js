@@ -7,6 +7,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -16,11 +17,28 @@ document.addEventListener("DOMContentLoaded", function () {
       document
         .getElementById("addNewPage")
         .addEventListener("click", () => togglePopup(true));
+      document
+        .getElementById("cancelButton")
+        .addEventListener("click", () => togglePopup(false));
     } else {
       window.location.href = "login.html";
     }
   });
 });
+// Gestionnaire d'événements pour le bouton de déconnexion
+document
+  .getElementById("disconnectButton")
+  .addEventListener("click", function () {
+    auth
+      .signOut()
+      .then(() => {
+        console.log("L'utilisateur est déconnecté");
+        window.location.href = "login.html"; // Rediriger l'utilisateur vers la page de connexion après la déconnexion
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la déconnexion", error);
+      });
+  });
 
 function togglePopup(show) {
   const popup = document.getElementById("pageCreationPopup");
@@ -71,6 +89,17 @@ document.getElementById("createPage").addEventListener("click", async () => {
     alert("Error creating page: " + error.message);
   }
 });
+// Fonction pour supprimer une page
+async function deletePage(pageId, pageDiv) {
+  try {
+    await deleteDoc(doc(db, "pages", pageId));
+    console.log("Page deleted successfully");
+    pageDiv.remove(); // Supprimer la div de la page
+  } catch (error) {
+    console.error("Error removing document: ", error);
+    alert("Error deleting page: " + error.message);
+  }
+}
 
 async function loadPages() {
   const user = auth.currentUser;
@@ -98,10 +127,24 @@ async function loadPages() {
     const page = doc.data();
     const pageDiv = document.createElement("div");
     pageDiv.className = "page";
-    pageDiv.textContent = page.name;
+
+    const pageNameSpan = document.createElement("span");
+    pageNameSpan.textContent = page.name;
+    pageDiv.appendChild(pageNameSpan);
+
+    const deleteCross = document.createElement("span");
+    deleteCross.textContent = "✖";
+    deleteCross.className = "delete-cross";
+    deleteCross.onclick = function (event) {
+      event.stopPropagation();
+      deletePage(doc.id, pageDiv);
+    };
+    pageDiv.appendChild(deleteCross);
+
     pageDiv.addEventListener("click", () => {
-      window.location.href = `page.html?pageId=${doc.id}`; // Redirect with page ID
+      window.location.href = `page.html?pageId=${doc.id}`;
     });
+
     pageHolder.appendChild(pageDiv);
   });
 
