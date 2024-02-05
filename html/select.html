@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/select.css" />
+  </head>
+  <body>
+    <div id="pageHolder">
+      <div
+        id="addNewPage"
+        class="page"
+        style="justify-content: center; align-items: center"
+      >
+        <span style="font-size: 4em; cursor: pointer">+</span>
+      </div>
+    </div>
+    <div id="pageCreationPopup" class="popup hidden">
+      <div class="popup-content">
+        <input type="text" id="newPageName" placeholder="Page Name" />
+        <button id="createPage">Create Page</button>
+        <button onclick="togglePopup(false)">Cancel</button>
+      </div>
+    </div>
+
+    <script type="module" src="/js/select.js"></script>
+  </body>
+</html>
