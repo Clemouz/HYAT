@@ -34,13 +34,11 @@ html {
   align-items: center;
   width: 100%;
   padding: 1em;
-
 }
 
 #header::before {
-  content: '';
+  content: "";
 }
-
 
 #pageTitle {
   position: relative;
@@ -49,10 +47,8 @@ html {
   color: white;
   justify-content: center;
   text-align: center;
-
 }
 #disconnectButton {
-
   background-image: url("/img/disconnect.png");
   background-size: cover; /* Ensures the image covers the button */
   background-position: center;
@@ -60,7 +56,7 @@ html {
   border: none;
   background-color: transparent;
   height: 2.2vw; /* Ajustez selon la taille souhaitée */
-  width: 2.2vw; 
+  width: 2.2vw;
 }
 
 #header-right {
@@ -181,7 +177,7 @@ button:hover {
     20px
   ); /* Flou de l'arrière-plan pour l'effet de verre */
   -webkit-backdrop-filter: blur(20px); /* Pour Safari */
-  border-radius: 10px; /* Bords arrondis */
+  border-radius: 5px; /* Bords arrondis */
   padding: 0.5em;
   height: 2.5vh;
   width: 40vw; /* Largeur responsive */

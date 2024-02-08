@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const q = query(
       collection(db, "postIts"),
-      where("userId", "==", auth.currentUser.uid),
       where("pageId", "==", currentPageId) // Ajouter un filtre pour le pageId
     ); // Requête Firestore pour récupérer les post-its pour l'utilisateur courant et le pageId spécifique
 
