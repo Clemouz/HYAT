@@ -10,7 +10,7 @@
     <div class="container">
       <div class="left-section"></div>
       <div class="right-section">
-        <h1>HYAT?</h1>
+        <h1>HYAT</h1>
         <div class="login-form">
           <input type="email" id="email" placeholder="Email" required />
           <input
@@ -23,8 +23,28 @@
         </div>
         <div class="register-link">
           <p>
-            Don't have an account? <a href="../html/register.html">Register</a>
+            Don't have an account? <a href="../html/index.html">Register</a>
           </p>
+          <!-- Lien ou bouton pour ouvrir le formulaire de réinitialisation -->
+          <a href="#" id="forgotPasswordLink">Forgot your password ?</a>
+          <!-- Ajouté juste après le lien "Mot de passe oublié ?" -->
+          <!-- Pop-up pour la réinitialisation du mot de passe -->
+          <div
+            id="resetPasswordPopup"
+            class="popup-container"
+            style="display: none"
+          >
+            <div class="popup-content">
+              <span class="close-button">&times;</span>
+              <h2>Reset Password</h2>
+              <input
+                type="email"
+                id="resetEmail"
+                placeholder="Enter your email"
+              />
+              <button id="resetPasswordButton">Send email</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

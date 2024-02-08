@@ -4,6 +4,39 @@
     format("truetype"); /* Spécifiez le chemin vers le fichier WOFF2 */
   /* Vous pouvez également inclure d'autres formats de police si vous le souhaitez */
 }
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+/* Montserrat Regular */
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Black.ttf") format("truetype");
+  font-weight: 900; /* You might need to adjust this value based on the font file */
+}
+
+/* Montserrat Bold */
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+/* Montserrat Light */
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Light.ttf") format("truetype");
+  font-weight: 600; /* You might need to adjust this value based on the font file */
+}
+
+/* Montserrat Semi-Bold */
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-Thin.ttf") format("truetype");
+  font-weight: 300; /* You might need to adjust this value based on the font file */
+}
 
 body,
 html {
@@ -99,6 +132,9 @@ html {
   font-family: "LogoFont";
   font-size: 2vw;
   color: #151515;
+  overflow: hidden; /* Empêche le texte de déborder */
+  white-space: nowrap; /* Empêche le texte de passer à la ligne */
+  text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est trop long */
 }
 
 .page:hover {
@@ -147,6 +183,8 @@ html {
 input[type="text"] {
   padding: 0.5em;
   margin-bottom: 1em;
+  font-family: "montserrat";
+  font-weight: 600;
 }
 
 /* Button styles */
@@ -161,7 +199,8 @@ button {
   /* Ajuste le padding des boutons */
   border-radius: 5px;
   cursor: pointer;
-  font-weight: bolder;
+  font-family: "montserrat";
+  font-weight: 900;
 }
 button:hover {
   background-color: transparent;
@@ -178,8 +217,8 @@ button:hover {
   ); /* Flou de l'arrière-plan pour l'effet de verre */
   -webkit-backdrop-filter: blur(20px); /* Pour Safari */
   border-radius: 5px; /* Bords arrondis */
-  padding: 0.5em;
-  height: 2.5vh;
+  padding: 1em;
+  height: 2vh;
   width: 40vw; /* Largeur responsive */
   max-width: 500px; /* Largeur maximale */
   color: white; /* Couleur du texte */
@@ -194,9 +233,10 @@ button:hover {
 
 #joinPageButton {
   background-color: white;
+  height: 2.8vw;
 }
 #joinPageButton:hover {
-  background-color: #f2f2f2;
+  background-color: #a1a1a1;
 }
 
 /* Responsive font sizes for smaller screens */
@@ -228,4 +268,7 @@ button:hover {
 }
 .delete-cross:hover {
   color: rgb(255, 255, 255); /* Changer la couleur au survol */
+}
+*:focus {
+  outline: none;
 }
