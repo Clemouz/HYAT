@@ -192,6 +192,13 @@ button:hover {
   background: rgba(252, 252, 252, 0.4); /* Effet de verre */
 }
 
+#joinPageButton {
+  background-color: white;
+}
+#joinPageButton:hover {
+  background-color: #f2f2f2;
+}
+
 /* Responsive font sizes for smaller screens */
 @media (max-width: 600px) {
   #pageTitle {

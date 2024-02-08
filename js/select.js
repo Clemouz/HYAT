@@ -14,17 +14,26 @@ document.addEventListener("DOMContentLoaded", function () {
   auth.onAuthStateChanged((user) => {
     if (user) {
       loadPages();
-      document
-        .getElementById("addNewPage")
-        .addEventListener("click", () => togglePopup(true));
-      document
-        .getElementById("cancelButton")
-        .addEventListener("click", () => togglePopup(false));
+      const addButton = document.getElementById("addNewPage");
+      const cancelButton = document.getElementById("cancelButton");
+
+      if (addButton) {
+        addButton.addEventListener("click", () => togglePopup(true));
+      } else {
+        console.log("L'élément 'addNewPage' n'existe pas.");
+      }
+
+      if (cancelButton) {
+        cancelButton.addEventListener("click", () => togglePopup(false));
+      } else {
+        console.log("L'élément 'cancelButton' n'existe pas.");
+      }
     } else {
       window.location.href = "login.html";
     }
   });
 });
+
 // Gestionnaire d'événements pour le bouton de déconnexion
 document
   .getElementById("disconnectButton")
@@ -146,50 +155,56 @@ async function loadPages() {
   const user = auth.currentUser;
   if (!user) return;
 
-  const pagesQuery = query(
+  const pageHolder = document.getElementById("pageHolder");
+  pageHolder.innerHTML = ""; // Nettoyer le pageHolder avant de le remplir
+
+  // Charger les pages créées par l'utilisateur
+  let pagesQuery = query(
     collection(db, "pages"),
     where("userId", "==", user.uid)
   );
-  const querySnapshot = await getDocs(pagesQuery);
+  let querySnapshot = await getDocs(pagesQuery);
+  querySnapshot.forEach((doc) => {
+    addPageToHolder(doc.data(), doc.id);
+  });
+
+  // Charger les pages que l'utilisateur a rejointes via la collection userPages
+  const userPagesQuery = query(
+    collection(db, "userPages"),
+    where("userId", "==", user.uid)
+  );
+  const userPagesSnapshot = await getDocs(userPagesQuery);
+  for (const userPageDoc of userPagesSnapshot.docs) {
+    const pageRef = doc(db, "pages", userPageDoc.data().pageId);
+    const pageSnap = await getDoc(pageRef);
+    if (pageSnap.exists()) {
+      addPageToHolder(pageSnap.data(), pageSnap.id);
+    }
+  }
+
+  // Ajouter le bouton pour créer une nouvelle page
+  addNewPageButton();
+}
+
+function addPageToHolder(page, pageId) {
   const pageHolder = document.getElementById("pageHolder");
+  const pageElement = document.createElement("div");
+  pageElement.className = "page";
+  pageElement.textContent = page.name;
+  pageElement.addEventListener("click", () => {
+    window.location.href = `page.html?pageId=${pageId}`;
+  });
+  pageHolder.appendChild(pageElement);
+}
 
-  pageHolder.innerHTML = "";
-
-  // Re-create the "Add New Page" button
+function addNewPageButton() {
+  const pageHolder = document.getElementById("pageHolder");
   const addNewPageDiv = document.createElement("div");
   addNewPageDiv.id = "addNewPage";
   addNewPageDiv.className = "page";
   addNewPageDiv.style = "justify-content: center; align-items: center;";
   addNewPageDiv.innerHTML =
     '<span style="font-size: 4em; cursor: pointer;">+</span>';
+  addNewPageDiv.addEventListener("click", () => togglePopup(true));
   pageHolder.appendChild(addNewPageDiv);
-
-  querySnapshot.forEach((doc) => {
-    const page = doc.data();
-    const pageDiv = document.createElement("div");
-    pageDiv.className = "page";
-
-    const pageNameSpan = document.createElement("span");
-    pageNameSpan.textContent = page.name;
-    pageDiv.appendChild(pageNameSpan);
-
-    const deleteCross = document.createElement("span");
-    deleteCross.textContent = "✖";
-    deleteCross.className = "delete-cross";
-    deleteCross.onclick = function (event) {
-      event.stopPropagation();
-      deletePage(doc.id, pageDiv);
-    };
-    pageDiv.appendChild(deleteCross);
-
-    pageDiv.addEventListener("click", () => {
-      window.location.href = `page.html?pageId=${doc.id}`;
-    });
-
-    pageHolder.appendChild(pageDiv);
-  });
-
-  document
-    .getElementById("addNewPage")
-    .addEventListener("click", () => togglePopup(true));
 }
