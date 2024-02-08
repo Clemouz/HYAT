@@ -204,21 +204,25 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault(); // Prevent the default behavior of the dragover event
     e.dataTransfer.dropEffect = "move"; // Set the drop effect to "move"
   };
-
   dropZone.ondrop = async function (e) {
-    e.preventDefault(); // Prevent the default behavior of the drop event
-    const data = e.dataTransfer.getData("text/plain"); // Get the data being dragged (if any)
-    const postIt = document.querySelector(".dragging"); // Get the post-it element being dragged
+    e.preventDefault();
+    const postIt = document.querySelector(".dragging");
 
     if (postIt) {
-      const dropX = e.clientX - dropZone.getBoundingClientRect().left; // Calculate the horizontal drop position
-      const dropY = e.clientY - dropZone.getBoundingClientRect().top; // Calculate the vertical drop position
+      // Get the mouse coordinates when the item is dropped
+      const dropX = e.clientX;
+      const dropY = e.clientY;
 
-      const left = dropX - postIt.offsetWidth / 2; // Adjust the horizontal position based on the post-it width
-      const top = dropY - postIt.offsetHeight / 2; // Adjust the vertical position based on the post-it height
+      // Get the bounding box of the dropZone
+      const bbox = dropZone.getBoundingClientRect();
 
-      postIt.style.left = left + "px"; // Set the adjusted horizontal position
-      postIt.style.top = top + "px"; // Set the adjusted vertical position
+      // Translate mouse coordinates to dropZone coordinates
+      const xInsideDropZone = dropX - bbox.left;
+      const yInsideDropZone = dropY - bbox.top;
+
+      // Update the postIt position
+      postIt.style.left = xInsideDropZone + "px";
+      postIt.style.top = yInsideDropZone + "px";
       try {
         const docId = postIt.dataset.docId; // Retrieve the document ID from the dataset
         await updateDoc(doc(db, "postIts", docId), {
@@ -230,6 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
           error
         ); // Log any errors
       }
+      postIt.classList.remove("dragging");
     }
   };
 
@@ -252,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to get a random color for the post-it background
   function getRandomColor() {
-    const colors = ["#ff7373", "#AED9E0", "#fff177", "#B3E283", "#D0D0E7"]; // Array of color options
+    const colors = ["#fc8383", "#b8f5ff", "#fff177", "#befc7e", "#cacafa"]; // Array of color options
     return colors[Math.floor(Math.random() * colors.length)]; // Return a random color from the array
   }
 
