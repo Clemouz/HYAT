@@ -1,6 +1,6 @@
 @font-face {
   font-family: "LogoFont"; /* Remplacez 'MaPolice' par le nom que vous souhaitez donner à la police. */
-  src: url("/fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf")
+  src: url("../fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf")
     format("truetype"); /* Spécifiez le chemin vers le fichier WOFF2 */
   /* Vous pouvez également inclure d'autres formats de police si vous le souhaitez */
 }
@@ -32,7 +32,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  background-image: url("/img/whiteboard.jpg");
+  background-image: url("../img/whiteboard.jpg");
   background-size: cover; /* Couvre toute la div */
   background-position: center;
   /* Add any additional styling here */

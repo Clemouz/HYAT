@@ -1,7 +1,7 @@
 /* style.css */
 @font-face {
   font-family: "LogoFont"; /* Remplacez 'MaPolice' par le nom que vous souhaitez donner à la police. */
-  src: url("/fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf")
+  src: url("../fonts/ClimateCrisis-Regular-VariableFont_YEAR.ttf")
     format("truetype"); /* Spécifiez le chemin vers le fichier WOFF2 */
   /* Vous pouvez également inclure d'autres formats de police si vous le souhaitez */
 }
@@ -14,7 +14,7 @@ body {
 }
 
 html {
-  background-image: url("/img/background1.png");
+  background-image: url("../img/background1.png");
   background-size: cover; /* Ensures the image fits within the drop zone */
   background-position: center; /* Centers the image in the drop zone */
   background-repeat: no-repeat; /* Prevents image from repeating */
@@ -73,7 +73,7 @@ header {
   margin-bottom: auto; /* Pushes the button to the top */
   margin-top: 2%;
   margin-left: 2%;
-  background-image: url("/img/disconnect.png");
+  background-image: url("../img/disconnect.png");
   background-size: cover; /* Ensures the image covers the button */
   background-position: center;
   background-repeat: no-repeat;
@@ -333,7 +333,7 @@ textarea {
 }
 
 .close-button {
-  background-image: url("/img/croix.png");
+  background-image: url("../img/croix.png");
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: center;
@@ -432,7 +432,7 @@ button:hover {
 
 /* Styles pour le bouton de suppression */
 .delete-post-it {
-  background-image: url("/img/croix.png");
+  background-image: url("../img/croix.png");
   background-color: transparent;
   border: none;
   border-radius: 50%;
@@ -502,12 +502,12 @@ button:hover {
 
 #prevBackground {
   left: 10px;
-  background-image: url("/img/arrow-left.png");
+  background-image: url("../img/arrow-left.png");
 }
 
 #nextBackground {
   right: 10px;
-  background-image: url("/img/arrow-right.png");
+  background-image: url("../img/arrow-right.png");
 }
 
 /* Styles pour le hover des boutons */
