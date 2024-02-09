@@ -191,9 +191,26 @@ function addPageToHolder(page, pageId) {
   const pageElement = document.createElement("div");
   pageElement.className = "page";
   pageElement.textContent = page.name;
-  pageElement.addEventListener("click", () => {
-    window.location.href = `page.html?pageId=${pageId}`;
+
+  // Create delete button element
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-button";
+  deleteButton.textContent = "✖"; // or you could set an image as background
+  deleteButton.onclick = function () {
+    deletePage(pageId, pageElement);
+  };
+
+  // Append delete button to page element
+  pageElement.appendChild(deleteButton);
+
+  // Event listener to redirect to page on click (excluding the delete button)
+  pageElement.addEventListener("click", (event) => {
+    // Prevents the page click event if the delete button is clicked
+    if (event.target !== deleteButton) {
+      window.location.href = `page.html?pageId=${pageId}`;
+    }
   });
+
   pageHolder.appendChild(pageElement);
 }
 

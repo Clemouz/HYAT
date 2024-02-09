@@ -648,3 +648,10 @@ button:hover {
 #imageInput:hover::before {
   border-color: black;
 }
+/* Supprime l'effet de contour pour tous les éléments */
+*:focus {
+  outline: none;
+}
+a {
+  text-decoration: none;
+}

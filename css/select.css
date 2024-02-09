@@ -242,10 +242,9 @@ button:hover {
 
 #joinPageButton {
   background-color: white;
-  height: 3vh;
-  width: 3vw;
+  height: 50px;
+  width: 80px;
   font-size: 1em;
-
 }
 
 #joinPageButton:hover {
@@ -271,17 +270,27 @@ button:hover {
   display: flex;
 }
 
-.delete-cross {
+.delete-button {
   position: absolute;
-  top: 5px; /* Ajustez selon vos besoins */
-  right: 5px; /* Ajustez selon vos besoins */
-  font-size: 0.5em; /* Réduire la taille */
+  top: 0; /* Aligns to the top edge of the page div */
+  right: 0; /* Aligns to the right edge of the page div */
+  width: 2vw; /* Smaller width for the button */
+  height: 2vw; /* Smaller height for the button */
+  font-size: 1vw; /* Adjust font size to scale the 'X' down */
+  line-height: 10px; /* Aligns 'X' vertically */
+  padding: 5px; /* Padding to ensure clickable area is larger than visual 'X' */
+  z-index: 10; /* Ensure it's above other elements */
+  background: none; /* No background */
+  border: none; /* No border */
   cursor: pointer;
-  color: #151515; /* ou une autre couleur pour une bonne visibilité */
+  text-align: center; /* Centers the 'X' horizontally */
 }
-.delete-cross:hover {
-  color: rgb(255, 255, 255); /* Changer la couleur au survol */
+.delete-button:hover {
+  color: #ffff; /* Change color on hover */
+  background-color: none;
+  backdrop-filter: none;
 }
+
 *:focus {
   outline: none;
 }
