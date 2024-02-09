@@ -204,35 +204,29 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault(); // Prevent the default behavior of the dragover event
     e.dataTransfer.dropEffect = "move"; // Set the drop effect to "move"
   };
+  // Corrected drop functionality
   dropZone.ondrop = async function (e) {
     e.preventDefault();
     const postIt = document.querySelector(".dragging");
 
     if (postIt) {
-      // Get the mouse coordinates when the item is dropped
-      const dropX = e.clientX;
-      const dropY = e.clientY;
+      // Adjust the drop position based on the initial offsets
+      const xInsideDropZone =
+        e.clientX - offsetX - dropZone.getBoundingClientRect().left;
+      const yInsideDropZone =
+        e.clientY - offsetY - dropZone.getBoundingClientRect().top;
 
-      // Get the bounding box of the dropZone
-      const bbox = dropZone.getBoundingClientRect();
+      postIt.style.left = `${xInsideDropZone}px`;
+      postIt.style.top = `${yInsideDropZone}px`;
 
-      // Translate mouse coordinates to dropZone coordinates
-      const xInsideDropZone = dropX - bbox.left;
-      const yInsideDropZone = dropY - bbox.top;
-
-      // Update the postIt position
-      postIt.style.left = xInsideDropZone + "px";
-      postIt.style.top = yInsideDropZone + "px";
+      // Update position in Firestore
       try {
-        const docId = postIt.dataset.docId; // Retrieve the document ID from the dataset
+        const docId = postIt.dataset.docId;
         await updateDoc(doc(db, "postIts", docId), {
-          position: { x: left, y: top }, // Update the position of the post-it in Firestore
+          position: { x: xInsideDropZone, y: yInsideDropZone },
         });
       } catch (error) {
-        console.error(
-          "Erreur lors de la mise à jour de la position du post-it: ",
-          error
-        ); // Log any errors
+        console.error("Error updating post-it position: ", error);
       }
       postIt.classList.remove("dragging");
     }
@@ -246,12 +240,17 @@ document.addEventListener("DOMContentLoaded", function () {
       postIt.classList.remove("dragging"); // Remove the "dragging" class from the post-it
     }
   });
+  // Variables to store the initial cursor position on drag start
+  let offsetX, offsetY;
 
   document.addEventListener("dragstart", function (e) {
-    const postIt = e.target; // Get the element that triggered the event
-
+    const postIt = e.target;
     if (postIt.classList.contains("post-it")) {
-      postIt.classList.add("dragging"); // Add the "dragging" class to the post-it
+      // Calculate offsets from the mouse to the top-left corner of the post-it
+      offsetX = e.clientX - postIt.getBoundingClientRect().left;
+      offsetY = e.clientY - postIt.getBoundingClientRect().top;
+
+      postIt.classList.add("dragging");
     }
   });
 

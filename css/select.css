@@ -63,10 +63,11 @@ html {
 /* Header styles */
 #header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
   width: 100%;
   padding: 1em;
+  align-items: center;
+  justify-content: center;
 }
 
 #header::before {
@@ -74,12 +75,16 @@ html {
 }
 
 #pageTitle {
-  position: relative;
+  display: flex;
   font-size: 5vw; /* Responsive font size */
   font-family: "LogoFont";
   color: white;
+  position: relative;
+  height: 10vw;
+  align-items: center;
   justify-content: center;
-  text-align: center;
+  margin-left: 2.8vw;
+  flex-grow: 1; /* Allows it to grow and fill space */
 }
 #disconnectButton {
   background-image: url("../img/disconnect.png");
@@ -87,13 +92,17 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   border: none;
-  background-color: transparent;
-  height: 2.2vw; /* Ajustez selon la taille souhaitée */
   width: 2.2vw;
+  height: 2.2vw;
 }
 
 #header-right {
   cursor: pointer;
+  display: flex;
+  align-items: center; /* Aligns children vertically center */
+  margin-left: auto; /* Pushes the element to the right */
+  width: 2.2vw;
+  height: 2.2vw;
 }
 
 /* Page holder styles */
@@ -233,8 +242,12 @@ button:hover {
 
 #joinPageButton {
   background-color: white;
-  height: 2.8vw;
+  height: 3vh;
+  width: 3vw;
+  font-size: 1em;
+
 }
+
 #joinPageButton:hover {
   background-color: #a1a1a1;
 }

@@ -434,7 +434,6 @@ button {
   color: #202020;
   border: black solid 2px;
 
-  font-size: 1em;
   /* Ajuste la taille du texte des boutons */
   padding: 0.5em 1em;
   /* Ajuste le padding des boutons */
@@ -442,6 +441,9 @@ button {
   cursor: pointer;
   font-family: "montserrat";
   font-weight: 900;
+}
+#addPostIt {
+  font-size: 1.2vw;
 }
 
 button:hover {
@@ -606,8 +608,43 @@ button:hover {
   position: absolute;
   top: 15px;
   right: 35px;
-  color: #f1f1f1;
+  color: black;
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;
+}
+#imageInput {
+  color: #202020;
+  border: black solid 2px;
+  padding: 0.5em 1em; /* Adjust padding to match the 'Create' button */
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 1.2vw; /* Adjust font size to match the 'Create' button */
+}
+
+/* Hide the default file input styles and make it look like a button */
+#imageInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+#imageInput::before {
+  content: "Select Image";
+  display: inline-block;
+  background: white;
+  border: black solid 2px;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  font-weight: 900;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+}
+
+#imageInput:hover::before {
+  border-color: black;
 }
