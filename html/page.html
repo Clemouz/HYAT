@@ -182,6 +182,22 @@
     <div id="postItContainer">
       <!-- Contenu des post-it va ici -->
     </div>
+    <!-- Popup d'édition pour les post-its -->
+    <div id="editPopup" class="popup hidden">
+      <div class="popup-content">
+        <input type="text" id="editTitleInput" placeholder="Titre" />
+        <textarea
+          id="editDescriptionInput"
+          placeholder="Description"
+        ></textarea>
+        <input type="color" id="editColorInput" title="Choose color" />
+        <input type="file" id="editImageInput" accept="image/*" />
+        <!-- Ajoutez d'autres champs de saisie ici si nécessaire -->
+        <button class="close-button" id="closeEditPopup">✖</button>
+        <button id="saveEdit">Save</button>
+      </div>
+    </div>
+
     <div id="popup" class="hidden">
       <div class="popup-content">
         <input type="text" id="titleInput" placeholder="Titre" />

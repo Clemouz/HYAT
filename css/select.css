@@ -95,6 +95,10 @@ html {
   width: 2.2vw;
   height: 2.2vw;
 }
+#disconnectButton:hover {
+  background-color: #a1a1a1;
+  border: solid 2px white;
+}
 
 #header-right {
   cursor: pointer;
@@ -115,6 +119,7 @@ html {
   padding: 10em;
   background-image: url("../img/background1.png");
   border-radius: 15px;
+  margin-bottom: 2vw;
 }
 
 .page {
@@ -233,6 +238,7 @@ button:hover {
   color: white; /* Couleur du texte */
   margin-bottom: 1em; /* Espacement en dessous */
   transition: box-shadow 0.3s ease; /* Transition pour l'effet de survol */
+  margin-bottom: 2vw;
 }
 
 /* Effet de survol pour la barre de recherche */
@@ -245,6 +251,7 @@ button:hover {
   height: 50px;
   width: 80px;
   font-size: 1em;
+  margin-bottom: 2vw;
 }
 
 #joinPageButton:hover {

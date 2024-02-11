@@ -88,6 +88,15 @@ document.addEventListener("DOMContentLoaded", function () {
     postIt.style.left = `${data.position.x}px`;
     postIt.style.top = `${data.position.y}px`;
 
+    const editButton = document.createElement("span");
+    editButton.textContent = "✎"; // Use an icon or text that represents editing
+    editButton.className = "edit-button";
+    editButton.style.position = "absolute";
+    editButton.style.top = "0px";
+    editButton.style.left = "0px";
+    editButton.style.cursor = "pointer";
+    postIt.appendChild(editButton);
+
     const deleteButton = document.createElement("span");
     deleteButton.textContent = "✖";
     deleteButton.className = "delete-button";
@@ -119,11 +128,69 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Erreur lors de la suppression du post-it: ", error);
       }
     });
+    // Event listener for the Edit button
+    editButton.addEventListener("click", function () {
+      openEditPopup(data, docId);
+    });
 
     dropZone.appendChild(postIt);
   }
 
   retrieveAndDisplayPostIts(); // Call the function to retrieve and display post-its
+
+  function openEditPopup(data, docId) {
+    const popup = document.getElementById("editPopup"); // The edit popup element
+    const titleInput = document.getElementById("editTitleInput"); // Edit title input
+    const descriptionInput = document.getElementById("editDescriptionInput"); // Edit description input
+    const imageInput = document.getElementById("editImageInput"); // Edit image input
+    const colorInput = document.getElementById("editColorInput"); // Ajouté: Sélecteur de couleur
+
+    // Pre-fill form inputs with existing data
+    titleInput.value = data.title;
+    descriptionInput.value = data.description.replace(/<br\s*\/?>/gi, "\n"); // Convert <br> back to newline for editing
+    colorInput.value = data.color || "#ffffff"; // Ajouté: Préremplir avec la couleur existante ou une valeur par défaut
+
+    // Display the popup
+    popup.style.display = "block";
+
+    // IMPORTANT: Remove any existing event listeners from the save button to prevent duplicate handlers
+    const saveButton = document.getElementById("saveEdit");
+    const newSaveButton = saveButton.cloneNode(true);
+    saveButton.parentNode.replaceChild(newSaveButton, saveButton);
+
+    // Save button event listener to update Firestore and close the popup
+    newSaveButton.addEventListener("click", function () {
+      // Retrieve updated values from form
+      const updatedTitle = titleInput.value;
+      const updatedDescription = descriptionInput.value;
+      const updatedColor = document.getElementById("editColorInput").value;
+      // Handle the updated image and color
+
+      // Update Firestore document
+      const postItRef = doc(db, "postIts", docId);
+      updateDoc(postItRef, {
+        title: updatedTitle,
+        description: updatedDescription.replace(/\n/g, "<br>"), // Convert newlines to <br> for display
+        color: updatedColor,
+        // Include updated fields for image and color
+      })
+        .then(() => {
+          console.log("Post-it updated successfully");
+          popup.style.display = "none"; // Close the popup
+          // Optionally refresh the displayed post-its or directly update the UI
+        })
+        .catch((error) => {
+          console.error("Error updating post-it: ", error);
+        });
+    });
+
+    // Close button functionality
+    document
+      .getElementById("closeEditPopup")
+      .addEventListener("click", function () {
+        document.getElementById("editPopup").style.display = "none";
+      });
+  }
 
   // Event listeners for opening and closing the popup
   openPopupButton.addEventListener("click", function () {
