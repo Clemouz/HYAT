@@ -21,7 +21,7 @@ import {
 
 // Initializing and handling the DOM elements when the content is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // UI elements for the post-it note application
+  
   const openPopupButton = document.getElementById("openPopup"); // Button to open the popup to add a new post-it
   const popup = document.getElementById("popup"); // Popup element for adding a new post-it
   const titleInput = document.getElementById("titleInput"); // Input field for the post-it title
@@ -43,6 +43,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var modalImg = document.getElementById("modalImage");
   var closeModal = document.getElementById("closeModal");
 
+  const dropZoneWidth = dropZone.offsetWidth;
+  const dropZoneHeight = dropZone.offsetHeight;
+
   // Récupération de l'ID de la page à partir de l'URL
   const urlParams = new URLSearchParams(window.location.search);
   const currentPageId = urlParams.get("pageId"); // Assumed to be set in the URL
@@ -54,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (docSnap.exists()) {
       const userData = docSnap.data();
       document.getElementById("userPseudo").textContent =
-        "Hello," + userData.pseudo;
+        "Hello, " + userData.pseudo;
     }
   }
 
@@ -92,14 +95,19 @@ document.addEventListener("DOMContentLoaded", function () {
     editButton.textContent = "✎"; // Use an icon or text that represents editing
     editButton.className = "edit-button";
     editButton.style.position = "absolute";
-    editButton.style.top = "0px";
-    editButton.style.left = "0px";
+    editButton.style.top = "5px";
+    editButton.style.left = "5px";
     editButton.style.cursor = "pointer";
+    editButton.style.color = "#151515";
     postIt.appendChild(editButton);
 
     const deleteButton = document.createElement("span");
     deleteButton.textContent = "✖";
     deleteButton.className = "delete-button";
+    deleteButton.style.position = "absolute";
+    deleteButton.style.top = "5px";
+    deleteButton.style.right = "5px";
+    deleteButton.style.color = "#151515";
     postIt.appendChild(deleteButton);
 
     if (data.imageURL) {
@@ -114,8 +122,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     deleteButton.style.position = "absolute";
-    deleteButton.style.top = "0px";
-    deleteButton.style.right = "0px";
+    deleteButton.style.top = "5px";
+    deleteButton.style.right = "5px";
     deleteButton.style.cursor = "pointer";
 
     deleteButton.addEventListener("click", async (event) => {
@@ -148,7 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Pre-fill form inputs with existing data
     titleInput.value = data.title;
     descriptionInput.value = data.description.replace(/<br\s*\/?>/gi, "\n"); // Convert <br> back to newline for editing
-    colorInput.value = data.color || "#ffffff"; // Ajouté: Préremplir avec la couleur existante ou une valeur par défaut
 
     // Display the popup
     popup.style.display = "block";
@@ -191,6 +198,19 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("editPopup").style.display = "none";
       });
   }
+  // Attend que le DOM soit entièrement chargé
+  $(document).ready(function () {
+    $("#dropZone").on("scroll", function () {
+      var scrollHeight = $(this)[0].scrollHeight;
+      var scrollPosition = $(this).innerHeight() + $(this).scrollTop();
+
+      // Vérifie si nous sommes à moins de 100 pixels du bas.
+      if (scrollPosition + 100 >= scrollHeight) {
+        var newElement = $('<div style="height: 600px;"></div>');
+        $("#dropZone").append(newElement);
+      }
+    });
+  });
 
   // Event listeners for opening and closing the popup
   openPopupButton.addEventListener("click", function () {
@@ -233,14 +253,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Vérification de la présence d'un titre et d'une description
-    if (title && description && auth.currentUser) {
+    if ((title || description) && auth.currentUser) {
       const newPostIt = {
         title: title,
         description: description.replace(/\n/g, "<br>"), // Remplacement des sauts de ligne par des balises <br> pour l'affichage HTML
         userId: auth.currentUser.uid,
         pageId: pageId, // Ajout de l'ID de la page au post-it
         color: getRandomColor(), // Attribution d'une couleur aléatoire ou spécifique
-        position: { x: Math.random() * 500, y: Math.random() * 500 }, // Position aléatoire, à ajuster selon vos besoins
+        position: {
+          x: Math.random() * dropZoneWidth,
+          y: Math.random() * dropZoneHeight,
+        }, // Position aléatoire, à ajuster selon vos besoins
         imageURL: imageURL, // Ajout de l'URL de l'image, si présente
       };
 
@@ -266,34 +289,56 @@ document.addEventListener("DOMContentLoaded", function () {
     return await getDownloadURL(uploadTask.ref);
   }
 
-  // Drag and drop functionality for the post-its
   dropZone.ondragover = function (e) {
-    e.preventDefault(); // Prevent the default behavior of the dragover event
-    e.dataTransfer.dropEffect = "move"; // Set the drop effect to "move"
+    e.preventDefault(); // Prévient le comportement par défaut de l'événement dragover
+    e.dataTransfer.dropEffect = "move"; // Définit l'effet de dépôt sur "move"
+
+    var headerHeight = document.querySelector("header").offsetHeight; // Obtenez la hauteur du header
+    var dropZoneRect = dropZone.getBoundingClientRect();
+    var relativeY =
+      e.clientY - dropZoneRect.top + window.scrollY - headerHeight; // Calcule la position Y relative, en tenant compte du header
+
+    var threshold = 100; // Distance en pixels à partir du haut/bas pour déclencher le défilement
+    var scrollSpeed = 20; // Vitesse de défilement, ajustez selon le besoin
+
+    if (relativeY > dropZone.offsetHeight - threshold) {
+      // Déclenche le défilement vers le bas si le curseur est près du bas de dropZone
+      dropZone.scrollTop += scrollSpeed;
+    } else if (relativeY < threshold) {
+      // Déclenche le défilement vers le haut si le curseur est près du haut de dropZone
+      dropZone.scrollTop -= scrollSpeed;
+    }
   };
+
   // Corrected drop functionality
   dropZone.ondrop = async function (e) {
     e.preventDefault();
     const postIt = document.querySelector(".dragging");
 
     if (postIt) {
-      // Adjust the drop position based on the initial offsets
+      // Calcule la position à l'intérieur de dropZone en tenant compte du défilement
+      const dropZoneRect = dropZone.getBoundingClientRect();
       const xInsideDropZone =
-        e.clientX - offsetX - dropZone.getBoundingClientRect().left;
-      const yInsideDropZone =
-        e.clientY - offsetY - dropZone.getBoundingClientRect().top;
+        e.clientX - dropZoneRect.left + dropZone.scrollLeft;
+      const yInsideDropZone = e.clientY - dropZoneRect.top + dropZone.scrollTop;
 
-      postIt.style.left = `${xInsideDropZone}px`;
-      postIt.style.top = `${yInsideDropZone}px`;
+      postIt.style.left = `${xInsideDropZone - offsetX}px`;
+      postIt.style.top = `${yInsideDropZone - offsetY}px`;
 
-      // Update position in Firestore
+      // Mettez à jour la position dans Firestore ou votre stockage de données ici
       try {
         const docId = postIt.dataset.docId;
         await updateDoc(doc(db, "postIts", docId), {
-          position: { x: xInsideDropZone, y: yInsideDropZone },
+          position: {
+            x: xInsideDropZone - offsetX,
+            y: yInsideDropZone - offsetY,
+          },
         });
       } catch (error) {
-        console.error("Error updating post-it position: ", error);
+        console.error(
+          "Erreur lors de la mise à jour de la position du post-it : ",
+          error
+        );
       }
       postIt.classList.remove("dragging");
     }
@@ -307,6 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
       postIt.classList.remove("dragging"); // Remove the "dragging" class from the post-it
     }
   });
+
   // Variables to store the initial cursor position on drag start
   let offsetX, offsetY;
 
@@ -318,6 +364,12 @@ document.addEventListener("DOMContentLoaded", function () {
       offsetY = e.clientY - postIt.getBoundingClientRect().top;
 
       postIt.classList.add("dragging");
+    }
+  });
+
+  $(window).scroll(function () {
+    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+      console.log("Vous êtes au bas de la page.");
     }
   });
 

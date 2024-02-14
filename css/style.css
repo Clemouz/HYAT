@@ -41,17 +41,11 @@
 
 html,
 body {
-  min-height: 100vh; /* Ensures that html and body cover the viewport height */
   margin: 0;
   padding: 0;
+  overflow: hidden; /* Hide overflow on the body to prevent double scrolling bars */
 }
 
-html {
-  background-image: url("../img/background1.png");
-  background-size: cover; /* Ensures the image fits within the drop zone */
-  background-position: center; /* Centers the image in the drop zone */
-  background-repeat: no-repeat; /* Prevents image from repeating */
-}
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -93,6 +87,7 @@ span {
 }
 
 header {
+  position: fixed;
   width: 100%;
   height: 15vh; /* Header takes 15% of the viewport height */
   background-color: #151515; /* Ajoutez l'image de fond */
@@ -101,9 +96,12 @@ header {
   align-items: center;
   margin: 0;
   border: 0;
+  top: 0;
+  left: 0;
   /* Les valeurs sont: offset-x | offset-y | blur-radius | spread-radius | color */
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(0.4) brightness(0.94);
+  z-index: 1000; /* High z-index to ensure the header is above other elements */
 }
 .header-right {
   display: flex;
@@ -149,14 +147,18 @@ header {
 }
 
 #dropZone {
-  position: absolute;
-  width: 100%;
-  height: 85vh;
-  bottom: 0%;
-  left: 0%;
-
-  /* assurez-vous que le fond d'écran couvre la div */
-  /* le fond d'écran ne doit pas se répéter */
+  width: 100vw; /* Full width of the viewport */
+  min-height: 100vh; /* Minimum height of the viewport, can be larger or managed dynamically */
+  background-image: url("../img/background1.png");
+  background-size: cover; /* Ensures the image covers the dropzone area */
+  background-repeat: no-repeat; /* Prevents the background from repeating */
+  overflow-y: scroll; /* Allows vertical scrolling */
+  position: relative; /* or 'absolute' if necessary for your layout */
+  top: 0;
+  left: 0;
+  z-index: 10; /* Adjust if necessary to ensure proper stacking context */
+  box-sizing: border-box; /* Inclut le padding dans le calcul de la hauteur */
+  max-height: 90vh; /* Exemple de hauteur maximale */
 }
 
 #pageTitle {
@@ -271,7 +273,8 @@ header {
 
 #openPopup:hover {
   background: transparent;
-  color: #000000;
+  color: #ffffff;
+  border: white solid 2px;
   box-shadow: 0 0 25px #e2e2e28c;
 }
 
@@ -469,8 +472,7 @@ button:hover {
 .post-it {
   background-color: #fee9a6;
   padding: 10px;
-  border-radius: 5px;
-  border: #202020 solid 2px;
+  border-radius: 10px;
   cursor: move;
   height: auto;
   user-select: none;
@@ -482,7 +484,7 @@ button:hover {
   /* pour limiter la largeur maximum si nécessaire */
   word-wrap: break-word;
   /* permet de s'assurer que le texte ne dépasse pas le post-it */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 25px rgba(88, 88, 88, 0.5);
   transition: transform 0.2s ease-in-out; /* Ajout de la transition pour une animation douce */
 }
 
@@ -538,7 +540,7 @@ button:hover {
   max-height: 100%; /* Adjust as needed */
   display: block;
   margin: 0 auto;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 /* Conteneur pour les boutons de navigation du fond */
