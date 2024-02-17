@@ -21,7 +21,6 @@ import {
 
 // Initializing and handling the DOM elements when the content is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  
   const openPopupButton = document.getElementById("openPopup"); // Button to open the popup to add a new post-it
   const popup = document.getElementById("popup"); // Popup element for adding a new post-it
   const titleInput = document.getElementById("titleInput"); // Input field for the post-it title
@@ -50,16 +49,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
   const currentPageId = urlParams.get("pageId"); // Assumed to be set in the URL
 
-  async function displayUserPseudo() {
-    if (!auth.currentUser) return;
-    const userRef = doc(db, "users", auth.currentUser.uid);
-    const docSnap = await getDoc(userRef);
-    if (docSnap.exists()) {
-      const userData = docSnap.data();
-      document.getElementById("userPseudo").textContent =
-        "Hello, " + userData.pseudo;
+  const settingsButton = document.getElementById("settingsButton");
+  const settingsDropdown = document.getElementById("settingsDropdown");
+
+  // Délégation d'événements pour les clics sur les images des post-its
+  dropZone.addEventListener("click", function (e) {
+    // Vérifie si l'élément cliqué est une image dans un post-it
+    if (
+      e.target.tagName === "IMG" &&
+      e.target.classList.contains("post-it-image")
+    ) {
+      modal.style.display = "block";
+      modalImg.src = e.target.src; // Affiche l'image cliquée dans le modal
     }
-  }
+  });
 
   // Function to retrieve and display post-its from Firestore
   // Fonction pour récupérer et afficher les post-its depuis Firestore
@@ -80,6 +83,51 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Fonction pour basculer le menu déroulant
+  function toggleDropdown() {
+    settingsDropdown.classList.toggle("hidden");
+  }
+
+  // Ajoutez un écouteur d'événements pour le bouton de réglages
+  settingsButton.addEventListener("click", function (event) {
+    event.stopPropagation();
+    toggleDropdown();
+  });
+
+  // Copie l'ID de la page dans le presse-papiers
+  document.getElementById("copyPageId").addEventListener("click", function () {
+    const pageIdElement = document.getElementById("pageIdDisplay");
+    if (pageIdElement) {
+      // Supposons que le texte soit "Page ID: 886ljhyjkBlEMFR5Egju"
+      const pageIdText = pageIdElement.textContent || pageIdElement.innerText;
+      // Divise le texte par ": " et prend le second élément du tableau résultant, qui est l'ID
+      const pageId = pageIdText.split(": ")[1];
+      navigator.clipboard
+        .writeText(pageId)
+        .then(() => {
+          alert("Page ID copied to clipboard");
+        })
+        .catch((err) => console.error("Error copying Page ID", err));
+    } else {
+      console.error("Element with ID 'pageIdDisplay' was not found.");
+    }
+  });
+
+  // Déconnexion de l'utilisateur
+  document.getElementById("signOut").addEventListener("click", function () {
+    // Utilisez votre méthode de déconnexion Firebase Auth ou autre
+    auth.signOut().then(() => {
+      // Redirigez vers la page de connexion ou traitez la déconnexion comme vous le souhaitez
+      console.log("User signed out");
+    });
+  });
+
+  // Ferme le menu déroulant si on clique en dehors
+  window.addEventListener("click", function () {
+    if (!settingsDropdown.classList.contains("hidden")) {
+      toggleDropdown();
+    }
+  });
   // Function to create a post-it element and add it to the page
   function createPostItElement(data, docId) {
     const postIt = document.createElement("div");
@@ -229,6 +277,11 @@ document.addEventListener("DOMContentLoaded", function () {
       modalImg.src = this.src;
     };
   });
+
+  // Événement de clic pour fermer le modal
+  closeModal.onclick = function () {
+    modal.style.display = "none";
+  };
 
   // Événement de clic pour fermer le modal
   closeModal.onclick = function () {
@@ -418,7 +471,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Listener for authentication state changes
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      displayUserPseudo();
       retrieveAndDisplayPostIts(); // Retrieve and display post-its for the authenticated user
     } else {
       console.log("L'utilisateur est déconnecté."); // Log when no user is authenticated

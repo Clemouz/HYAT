@@ -65,9 +65,9 @@ html {
   display: flex;
   position: relative;
   width: 100%;
-  padding: 1em;
+  padding: 1em; /* Remplacez 1em par la valeur de marge que vous voulez pour le haut et le bas */
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Espacement entre les éléments */
 }
 
 #header::before {
@@ -75,38 +75,40 @@ html {
 }
 
 #pageTitle {
-  display: flex;
-  font-size: 5vw; /* Responsive font size */
+  font-size: 5vw; /* Taille de police responsive */
   font-family: "LogoFont";
   color: white;
   position: relative;
-  height: 10vw;
+  height: auto; /* Hauteur automatique pour ajuster le contenu */
   align-items: center;
   justify-content: center;
-  margin-left: 2.8vw;
-  flex-grow: 1; /* Allows it to grow and fill space */
+  margin: 0 auto; /* Margin auto pour centrer le titre */
 }
+
 #disconnectButton {
   background-image: url("../img/disconnect.png");
-  background-size: cover; /* Ensures the image covers the button */
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
   width: 2.2vw;
   height: 2.2vw;
+  cursor: pointer; /* Ajouté pour que l'utilisateur sache qu'il s'agit d'un bouton cliquable */
 }
+
 #disconnectButton:hover {
   background-color: #a1a1a1;
   border: solid 2px white;
 }
-
 #header-right {
-  cursor: pointer;
   display: flex;
-  align-items: center; /* Aligns children vertically center */
-  margin-left: auto; /* Pushes the element to the right */
-  width: 2.2vw;
-  height: 2.2vw;
+  align-items: center;
+  position: absolute; /* Positionnement absolu pour le placer précisément */
+  top: 50%; /* Démarre à 50% du haut de l'en-tête */
+  right: 5vw; /* Ajustez cette valeur pour la marge droite */
+  transform: translateY(
+    -50%
+  ); /* Centrer verticalement par rapport à sa propre hauteur */
 }
 
 /* Page holder styles */
@@ -253,9 +255,17 @@ button:hover {
   font-size: 1em;
   margin-bottom: 2vw;
 }
+#userPseudo {
+  font-size: 1.5em;
+  font-family: "montserrat";
+  font-weight: normal;
+  color: white;
+  margin-right: 1vw;
+}
 
 #joinPageButton:hover {
-  background-color: #a1a1a1;
+  background-color: #38ff9c;
+  color: white;
 }
 
 /* Responsive font sizes for smaller screens */
@@ -293,7 +303,7 @@ button:hover {
   text-align: center; /* Centers the 'X' horizontally */
 }
 .delete-button:hover {
-  color: #ffff; /* Change color on hover */
+  color: #38ff9c; /* Change color on hover */
   background-color: none;
   backdrop-filter: none;
 }

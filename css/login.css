@@ -61,7 +61,7 @@ a {
   font-size: 1em;
 }
 a:hover {
-  color: #0054d2;
+  color: #38ff9c;
 }
 
 p {
@@ -157,10 +157,15 @@ input {
   font-family: "Montserrat";
   font-weight: 600;
   font-size: 1em;
+  border: 2px solid transparent; /* Ajoute une bordure transparente par défaut */
+  box-sizing: border-box; /* S'assure que la taille de l'input inclut le padding et la bordure */
 }
+
 input:focus {
-  border: solid 2.5px #0054d2;
+  outline: solid 2.5px #38FF9C; /* Utilise outline pour le focus au lieu de changer la bordure */
+  /* Aucun ajustement de la bordure ici pour éviter de déplacer les éléments */
 }
+
 input:hover {
   background-color: #a5a5a5;
 }

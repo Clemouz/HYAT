@@ -11,7 +11,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-  auth.onAuthStateChanged((user) => {
+  auth.onAuthStateChanged(async (user) => {
+    // Marquez cette fonction comme async
     if (user) {
       loadPages();
       const addButton = document.getElementById("addNewPage");
@@ -27,6 +28,18 @@ document.addEventListener("DOMContentLoaded", function () {
         cancelButton.addEventListener("click", () => togglePopup(false));
       } else {
         console.log("L'élément 'cancelButton' n'existe pas.");
+      }
+
+      // Ajouté : Mettre à jour le pseudo de l'utilisateur
+      try {
+        const pseudo = await getUserPseudo(user.uid); // Utilisation de await dans une fonction async
+        const userPseudoSpan = document.getElementById("userPseudo");
+        if (userPseudoSpan) userPseudoSpan.textContent = "Hello, " + pseudo;
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération du pseudo de l'utilisateur",
+          error
+        );
       }
     } else {
       window.location.href = "login.html";

@@ -170,9 +170,14 @@
         </button>
       </div>
       <div class="header-right">
-        <button id="disconnectButton"></button>
-        <span id="userPseudo"></span>
-        <span id="pageIdDisplay"></span>
+        <!-- Exemple d'élément pour afficher l'ID de la page, à placer dans le header ou ailleurs dans votre page -->
+        <span id="pageIdDisplay" style="display:none;">ID_de_la_page</span>
+
+        <button id="settingsButton">Settings</button>
+        <div id="settingsDropdown" class="dropdown-content hidden">
+          <a href="#" id="copyPageId">Copy Page ID</a>
+          <a href="#" id="signOut">Sign Out</a>
+        </div>
         <div class="navbuttons">
           <button id="prevBackground"></button>
           <button id="nextBackground"></button>
