@@ -7,8 +7,8 @@ import {
   where,
   onSnapshot,
   deleteDoc,
-  doc,
   getDoc,
+  doc,
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
@@ -18,6 +18,21 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-storage.js";
+
+// Fonction pour charger l'arrière-plan depuis Firestore lors du chargement de la page
+async function loadBackgroundFromFirestore(pageId) {
+  const pageRef = doc(db, "pages", pageId);
+  const docSnap = await getDoc(pageRef);
+
+  if (docSnap.exists() && docSnap.data().background) {
+    // Si le document et l'arrière-plan existent, mettez à jour le style de dropZone
+    const backgroundUrl = docSnap.data().background;
+    const dropZone = document.getElementById("dropZone");
+    dropZone.style.backgroundImage = `url('${backgroundUrl}')`;
+  } else {
+    console.log("Aucun arrière-plan trouvé pour cette page dans Firestore.");
+  }
+}
 
 // Initializing and handling the DOM elements when the content is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
@@ -29,12 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const closePopupButton = document.getElementById("closePopup"); // Button to close the popup
   const dropZone = document.getElementById("dropZone"); // Area where post-its are displayed and can be dragged
   const backgroundImages = [
-    "/img/background1.png",
-    "/img/background2.png",
-    "/img/background3.png",
-    "/img/background4.png",
-    "/img/background5.png",
-    "/img/background6.png",
+    "../img/background1.png",
+    "../img/background2.png",
+    "../img/background3.png",
+    "../img/background4.png",
+    "../img/background5.png",
+    "../img/background6.png",
   ]; // Array of background images for the application
   let currentBackgroundIndex = 0; // Index to keep track of the current background image
   // Obtenez les éléments
@@ -52,17 +67,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const settingsButton = document.getElementById("settingsButton");
   const settingsDropdown = document.getElementById("settingsDropdown");
 
-  // Délégation d'événements pour les clics sur les images des post-its
-  dropZone.addEventListener("click", function (e) {
-    // Vérifie si l'élément cliqué est une image dans un post-it
-    if (
-      e.target.tagName === "IMG" &&
-      e.target.classList.contains("post-it-image")
-    ) {
-      modal.style.display = "block";
-      modalImg.src = e.target.src; // Affiche l'image cliquée dans le modal
-    }
-  });
+  if (currentPageId) {
+    loadBackgroundFromFirestore(currentPageId);
+  }
 
   // Function to retrieve and display post-its from Firestore
   // Fonction pour récupérer et afficher les post-its depuis Firestore
@@ -135,7 +142,11 @@ document.addEventListener("DOMContentLoaded", function () {
     postIt.setAttribute("draggable", "true");
     postIt.style.backgroundColor = data.color;
     postIt.dataset.docId = docId;
-    postIt.innerHTML = `<h2>${data.title}</h2><p>${data.description}</p>`;
+
+    // Supposons que data.description peut contenir du texte brut potentiellement avec des URLs
+    const linkedDescription = linkify(data.description); // Transforme les URLs en balises <a>
+
+    postIt.innerHTML = `<h2>${data.title}</h2><p>${linkedDescription}</p>`;
     postIt.style.left = `${data.position.x}px`;
     postIt.style.top = `${data.position.y}px`;
 
@@ -163,8 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
       img.src = data.imageURL;
       img.className = "post-it-image";
       img.onclick = function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
+        modal.style.display = "block"; // Affiche la modal
+        modalImg.src = this.src; // Définit la source de l'image de la modal
       };
       postIt.appendChild(img);
     }
@@ -193,6 +204,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   retrieveAndDisplayPostIts(); // Call the function to retrieve and display post-its
+
+  function linkify(inputText) {
+    var replacedText, replacePattern1;
+
+    //URLs starting with http://, https://, or ftp://
+    replacePattern1 =
+      /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacedText = inputText.replace(
+      replacePattern1,
+      '<a href="$1" target="_blank">$1</a>'
+    );
+
+    // Retourne le texte avec les URLs converties en liens
+    return replacedText;
+  }
 
   function openEditPopup(data, docId) {
     const popup = document.getElementById("editPopup"); // The edit popup element
@@ -270,23 +296,19 @@ document.addEventListener("DOMContentLoaded", function () {
     popup.style.display = "none"; // Hide the popup when the close button is clicked
   });
 
-  // Événement de clic pour les images des post-its
-  document.querySelectorAll(".post-it img").forEach((img) => {
-    img.onclick = function () {
+  // Événement de clic pour fermer le modal
+  closeModal.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  // Attacher un événement click délégué à dropZone
+  dropZone.addEventListener("click", function (event) {
+    if (event.target.classList.contains("post-it-image")) {
       modal.style.display = "block";
-      modalImg.src = this.src;
-    };
+      modalImg.src = event.target.src;
+    }
   });
 
-  // Événement de clic pour fermer le modal
-  closeModal.onclick = function () {
-    modal.style.display = "none";
-  };
-
-  // Événement de clic pour fermer le modal
-  closeModal.onclick = function () {
-    modal.style.display = "none";
-  };
   // Event listener for adding a new post-it
   // Event listener for adding a new post-it
   addPostItButton.addEventListener("click", async function () {
@@ -343,22 +365,19 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   dropZone.ondragover = function (e) {
-    e.preventDefault(); // Prévient le comportement par défaut de l'événement dragover
-    e.dataTransfer.dropEffect = "move"; // Définit l'effet de dépôt sur "move"
+    e.preventDefault(); // Prévenir le comportement par défaut.
 
-    var headerHeight = document.querySelector("header").offsetHeight; // Obtenez la hauteur du header
-    var dropZoneRect = dropZone.getBoundingClientRect();
-    var relativeY =
-      e.clientY - dropZoneRect.top + window.scrollY - headerHeight; // Calcule la position Y relative, en tenant compte du header
+    const dropZoneRect = dropZone.getBoundingClientRect(); // Obtient les dimensions de dropZone et sa position relative au viewport.
+    const relativeY = e.clientY - dropZoneRect.top; // Calcule la position Y du curseur relative à dropZone.
 
-    var threshold = 100; // Distance en pixels à partir du haut/bas pour déclencher le défilement
-    var scrollSpeed = 20; // Vitesse de défilement, ajustez selon le besoin
+    const threshold = 100; // Seuil pour déclencher le scroll.
+    const scrollSpeed = 20; // Vitesse de défilement.
 
-    if (relativeY > dropZone.offsetHeight - threshold) {
-      // Déclenche le défilement vers le bas si le curseur est près du bas de dropZone
+    if (relativeY > threshold + dropZone.offsetHeight / 2) {
+      // Si le curseur est proche du bas de dropZone, déclencher le défilement vers le bas.
       dropZone.scrollTop += scrollSpeed;
     } else if (relativeY < threshold) {
-      // Déclenche le défilement vers le haut si le curseur est près du haut de dropZone
+      // Si le curseur est proche du haut de dropZone, déclencher le défilement vers le haut.
       dropZone.scrollTop -= scrollSpeed;
     }
   };
@@ -438,34 +457,54 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Function to change the background image of the dropZone
-  function changeBackgroundImage(next = true) {
+  // Fonction pour changer l'arrière-plan d'une page
+  async function changeBackgroundImage(pageId, next = true) {
+    // Récupère la référence du document dans Firestore
+    const pageRef = doc(db, "pages", pageId);
+
+    // Calcule le nouvel indice de l'arrière-plan
     if (next) {
       currentBackgroundIndex =
-        (currentBackgroundIndex + 1) % backgroundImages.length; // Increment the background index
+        (currentBackgroundIndex + 1) % backgroundImages.length;
     } else {
       currentBackgroundIndex =
         (currentBackgroundIndex - 1 + backgroundImages.length) %
-        backgroundImages.length; // Decrement the background index
+        backgroundImages.length;
     }
-    const htmlElement = document.documentElement;
-    htmlElement.style.backgroundImage = `url('${backgroundImages[currentBackgroundIndex]}')`; // Update the background image of the HTML element
-    htmlElement.style.backgroundSize = "cover"; // Set the background size to cover the entire element
-    htmlElement.style.backgroundPosition = "center"; // Center the background image
-    htmlElement.style.backgroundRepeat = "no-repeat"; // Do not repeat the background image
+
+    // Détermine l'URL de l'arrière-plan sélectionné
+    const selectedBackgroundUrl = backgroundImages[currentBackgroundIndex];
+
+    try {
+      // Met à jour le champ 'background' du document
+      await updateDoc(pageRef, {
+        background: selectedBackgroundUrl,
+      });
+
+      // Met à jour l'arrière-plan dans l'interface utilisateur si nécessaire
+      const dropZone = document.getElementById("dropZone");
+      dropZone.style.backgroundImage = `url('${selectedBackgroundUrl}')`;
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de l'arrière-plan :", error);
+    }
   }
 
-  // Event listeners for changing the background image
   document
     .getElementById("nextBackground")
     .addEventListener("click", function () {
-      changeBackgroundImage(true); // Change to the next background image when clicked
+      const pageIdText = document.getElementById("pageIdDisplay").innerText;
+      // Nettoyez l'ID de la page en enlevant tout ce qui n'est pas l'ID lui-même
+      const pageId = pageIdText.replace("Page ID: ", ""); // Enlevez le préfixe "Page ID: "
+      changeBackgroundImage(pageId, true);
     });
 
   document
     .getElementById("prevBackground")
     .addEventListener("click", function () {
-      changeBackgroundImage(false); // Change to the previous background image when clicked
+      const pageIdText = document.getElementById("pageIdDisplay").innerText;
+      // De même, nettoyez l'ID de la page ici
+      const pageId = pageIdText.replace("Page ID: ", ""); // Enlevez le préfixe "Page ID: "
+      changeBackgroundImage(pageId, false);
     });
 
   // Listener for authentication state changes

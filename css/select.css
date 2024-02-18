@@ -51,7 +51,7 @@ html {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background: #151515;
+  background: #000000;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,8 +97,8 @@ html {
 }
 
 #disconnectButton:hover {
-  background-color: #a1a1a1;
-  border: solid 2px white;
+  background-color: #2abd74;
+  border: solid 2px #38ff9c;
 }
 #header-right {
   display: flex;
