@@ -186,15 +186,25 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteButton.style.cursor = "pointer";
 
     deleteButton.addEventListener("click", async (event) => {
-      event.stopPropagation();
+      event.stopPropagation(); // Empêche l'événement de se propager à d'autres gestionnaires
       try {
-        const docId = postIt.dataset.docId;
-        await deleteDoc(doc(db, "postIts", docId));
-        postIt.remove();
+        const docId = postIt.dataset.docId; // Assurez-vous que `postIt` a bien un attribut `data-doc-id`
+        await deleteDoc(doc(db, "postIts", docId)); // Supprime le post-it de Firestore
+        postIt.remove(); // Supprime le post-it de l'interface utilisateur
+
+        // Mise à jour de l'indicateur de notification pour la page
+        const pageRef = doc(db, "pages", currentPageId); // Assurez-vous que `pageId` est correctement défini et accessible
+        await updateDoc(pageRef, {
+          hasNewNotifications: true,
+        });
       } catch (error) {
-        console.error("Erreur lors de la suppression du post-it: ", error);
+        console.error(
+          "Erreur lors de la suppression du post-it ou de la mise à jour des notifications: ",
+          error
+        );
       }
     });
+
     // Event listener for the Edit button
     editButton.addEventListener("click", function () {
       openEditPopup(data, docId);
@@ -208,15 +218,15 @@ document.addEventListener("DOMContentLoaded", function () {
   function linkify(inputText) {
     var replacedText, replacePattern1;
 
-    //URLs starting with http://, https://, or ftp://
-    replacePattern1 =
-      /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    // URLs starting with http://, https://, or ftp://
+    // Simplified pattern to capture more broadly until a space or specific delimiter
+    replacePattern1 = /(\b(https?|ftp):\/\/[^\s"<>\[\]]*[^\s"<>\[\],.!?:;])/gim;
     replacedText = inputText.replace(
       replacePattern1,
       '<a href="$1" target="_blank">$1</a>'
     );
 
-    // Retourne le texte avec les URLs converties en liens
+    // Return the text with URLs converted into links
     return replacedText;
   }
 
@@ -346,6 +356,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Ajout du post-it à Firestore dans la collection 'postIts'
         await addDoc(collection(db, "postIts"), newPostIt);
         console.log("Post-it added successfully");
+
         // Fermeture de la pop-up après l'ajout réussi
         popup.style.display = "none";
         // Rafraîchissement des post-its affichés ou redirection, selon votre logique

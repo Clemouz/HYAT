@@ -47,7 +47,7 @@ html {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 4.5em;
   /* Ajuste la taille du titre */
   color: white;
   margin: 0;
@@ -61,7 +61,7 @@ a {
   font-size: 1em;
 }
 a:hover {
-  color: #38ff9c;
+  color: #0066ff;
 }
 
 p {
@@ -83,6 +83,9 @@ h2 {
   display: flex;
   width: 100%;
   height: 100%;
+  background-image: url("../img/whiteboard.jpg");
+  background-size: cover; /* Couvre toute la div */
+  background-position: left;
 }
 
 .left-section {
@@ -91,9 +94,6 @@ h2 {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  background-image: url("../img/whiteboard.jpg");
-  background-size: cover; /* Couvre toute la div */
-  background-position: center;
   /* Add any additional styling here */
 }
 
@@ -101,12 +101,13 @@ h2 {
   display: flex;
   align-items: center;
   flex-basis: 33%;
-  background-color: #000000;
   flex-direction: column;
   justify-content: center;
   /* Add any additional styling here */
+  background-color: #0e0d0d;
 }
 
+.login-form,
 .register-form {
   display: flex;
   align-items: center;
@@ -115,33 +116,24 @@ h2 {
   padding: 20px;
   width: 80%;
 }
+
+.login-form input,
 .register-form input {
-  width: 80%;
-  padding: 10px;
-  margin-bottom: 20px;
+  width: 90%; /* Largeur du champ de saisie */
+  height: 3vw; /* Hauteur du champ de saisie */
+  padding: 15px; /* Espace à l'intérieur du champ de saisie */
+  margin-bottom: 20px; /* Espace entre les champs de saisie */
   border: none;
-  border-radius: 5px;
-}
-.login-form {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 10px;
-  padding: 20px;
-  width: 80%;
-}
-.login-form input {
-  width: 80%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: none;
-  border-radius: 5px;
+  border-radius: 5px; /* Rayon de la bordure pour les coins arrondis */
+  /* Autres styles */
 }
 
-.logo {
-  display: block; /* Pour permettre la centralisation du logo */
-  margin: 0 auto; /* Centrer le logo horizontalement */
-  margin-bottom: 20%; /* Espace entre le logo et le formulaire */
+input::placeholder {
+  color: #000000;
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 1em;
+  border-radius: 15%;
 }
 ::placeholder {
   color: #484848;
@@ -162,7 +154,7 @@ input {
 }
 
 input:focus {
-  outline: solid 2.5px #38FF9C; /* Utilise outline pour le focus au lieu de changer la bordure */
+  outline: solid 4px #0044ff; /* Utilise outline pour le focus au lieu de changer la bordure */
   /* Aucun ajustement de la bordure ici pour éviter de déplacer les éléments */
 }
 
@@ -171,8 +163,8 @@ input:hover {
 }
 
 #login_button {
-  width: 12rem;
-  height: 2.5rem;
+  width: 14rem;
+  height: 3rem;
   border: none;
   outline: none;
   color: #151515;
@@ -245,8 +237,8 @@ input:hover {
   }
 }
 #register_button {
-  width: 12rem;
-  height: 2.5rem;
+  width: 14rem;
+  height: 3rem;
   border: none;
   outline: none;
   color: #151515;
@@ -332,17 +324,13 @@ input:hover {
   border-radius: 20px;
   text-align: center;
   display: none;
-  /* Removing the border for a cleaner look */
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  gap: 0.5vw;
   /* Adjust shadow for depth */
   /* Adjust shadow for depth */
-  backdrop-filter: blur(
-    4px,
-    brightness(0.8)
-  ); /* Applique un flou de 5 pixels à l'arrière-plan */
+
   padding: 20px;
-  border: solid 3px black;
-  border-radius: 5px;
+  border: solid 3px rgb(255, 255, 255);
+  border-radius: 12px;
   width: 20vw;
   position: relative;
   display: flex; /* Ajouté */
@@ -352,9 +340,9 @@ input:hover {
 
 .close-button {
   position: absolute;
-  top: 10px;
+  top: 7px;
   right: 15px;
-  font-size: 25px;
+  font-size: 35px;
   cursor: pointer;
   color: #898989;
 }
@@ -375,7 +363,7 @@ input:hover {
 button {
   background-color: transparent;
   color: #ffffff;
-  border: black solid 2px;
+  border: rgb(255, 255, 255) solid 2px;
 
   font-size: 1em;
   /* Ajuste la taille du texte des boutons */
@@ -390,6 +378,14 @@ button {
 button:hover {
   background-color: transparent;
   backdrop-filter: brightness(0.95) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
+}
+
+.register-link {
+  display: flex;
+  flex-direction: column; /* Empile les éléments verticalement */
+  align-items: center; /* Centre les éléments horizontalement dans la div */
+  justify-content: center; /* Centre les éléments verticalement dans la div */
+  text-align: center; /* Assure que le texte à l'intérieur des éléments est également centré */
 }
 
 /* Supprime l'effet de contour pour tous les éléments */

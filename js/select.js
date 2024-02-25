@@ -8,6 +8,8 @@ import {
   doc,
   getDoc,
   deleteDoc,
+  onSnapshot,
+  updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -172,11 +174,11 @@ async function loadPages() {
   pageHolder.innerHTML = ""; // Nettoyer le pageHolder avant de le remplir
 
   // Charger les pages créées par l'utilisateur
-  let pagesQuery = query(
+  const pagesQuery = query(
     collection(db, "pages"),
     where("userId", "==", user.uid)
   );
-  let querySnapshot = await getDocs(pagesQuery);
+  const querySnapshot = await getDocs(pagesQuery);
   querySnapshot.forEach((doc) => {
     addPageToHolder(doc.data(), doc.id);
   });
@@ -195,9 +197,11 @@ async function loadPages() {
     }
   }
 
-  // Ajouter le bouton pour créer une nouvelle page
+  // Ajouter le bouton pour créer une nouvelle page, si nécessaire
   addNewPageButton();
 }
+
+// Dans la fonction qui charge les pages, après avoir récupéré chaque document de page
 
 function addPageToHolder(page, pageId) {
   const pageHolder = document.getElementById("pageHolder");
@@ -205,21 +209,45 @@ function addPageToHolder(page, pageId) {
   pageElement.className = "page";
   pageElement.textContent = page.name;
 
-  // Create delete button element
+  // Créer l'élément de la bulle de notification
+  const notificationBubble = document.createElement("div");
+  notificationBubble.className = "notification-bubble";
+  // Afficher ou masquer la bulle en fonction de la propriété hasNewNotifications
+  notificationBubble.style.display = page.hasNewNotifications
+    ? "block"
+    : "none";
+  notificationBubble.setAttribute("data-page-id", pageId);
+
+  // Ajouter la bulle de notification à l'élément de la page
+  pageElement.appendChild(notificationBubble);
+
   const deleteButton = document.createElement("button");
   deleteButton.className = "delete-button";
-  deleteButton.textContent = "✖"; // or you could set an image as background
+  deleteButton.textContent = "✖";
   deleteButton.onclick = function () {
     deletePage(pageId, pageElement);
   };
 
-  // Append delete button to page element
   pageElement.appendChild(deleteButton);
 
-  // Event listener to redirect to page on click (excluding the delete button)
-  pageElement.addEventListener("click", (event) => {
-    // Prevents the page click event if the delete button is clicked
-    if (event.target !== deleteButton) {
+  // Écouteur d'événements pour gérer les clics sur la pageElement et potentiellement réinitialiser hasNewNotifications
+  pageElement.addEventListener("click", async (event) => {
+    // Assurez-vous que le clic n'est pas sur le bouton de suppression
+    if (event.target === deleteButton) {
+      // Ne faites rien si le bouton de suppression est cliqué
+      event.stopPropagation(); // Optionnel, pour éviter que l'événement ne se propage plus loin
+    } else if (page.hasNewNotifications) {
+      // Si le clic est sur l'élément de la page et qu'il y a des notifications
+      const pageRef = doc(db, "pages", pageId);
+      try {
+        await updateDoc(pageRef, { hasNewNotifications: false });
+        notificationBubble.style.display = "none"; // Cachez la bulle de notification
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour du document : ", error);
+      }
+      window.location.href = `page.html?pageId=${pageId}`; // Redirige vers la page liée
+    } else {
+      // Si aucune notification n'est active, redirige simplement vers la page
       window.location.href = `page.html?pageId=${pageId}`;
     }
   });
