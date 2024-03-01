@@ -97,8 +97,8 @@ html {
 }
 
 #disconnectButton:hover {
-  background-color: #2abd74;
-  border: solid 2px #38ff9c;
+  background-color: #0030b5;
+  border: solid 2px #0044ff;
 }
 #header-right {
   display: flex;
@@ -266,7 +266,7 @@ button:hover {
 }
 
 #joinPageButton:hover {
-  background-color: #38ff9c;
+  background-color: #0044ff;
   color: white;
 }
 
@@ -289,24 +289,6 @@ button:hover {
   display: flex;
 }
 
-.notification-bubble {
-  position: absolute;
-  top: 0; /* Aligns to the top edge of the page div */
-  left: 0; /* Aligns to the right edge of the page div */
-  width: 2vw; /* Smaller width for the button */
-  height: 2vw; /* Smaller height for the button */
-  font-size: 1vw; /* Adjust font size to scale the 'X' down */
-  line-height: 10px; /* Aligns 'X' vertically */
-  padding: 5px; /* Padding to ensure clickable area is larger than visual 'X' */
-  z-index: 10; /* Ensure it's above other elements */
-  background: none; /* No background */
-  border: none; /* No border */
-  cursor: pointer;
-  text-align: center; /* Centers the 'X' horizontally */
-  background-color: red;
-  border-radius: 100%;
-  display: block;
-}
 
 .delete-button {
   position: absolute;

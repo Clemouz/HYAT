@@ -39,7 +39,7 @@ document
       console.log("Page 'Main' créée avec succès avec l'ID : ", pageDocRef.id);
       console.log("Informations de l'utilisateur stockées dans Firestore");
       // Redirection vers 'index.html' après l'enregistrement
-      window.location.href = "select.html";
+      window.location.href = "../html/select.html";
     } catch (error) {
       console.error("Erreur lors de l'inscription : ", error);
       alert("Erreur lors de l'inscription : " + error.message);

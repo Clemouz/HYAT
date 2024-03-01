@@ -191,12 +191,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const docId = postIt.dataset.docId; // Assurez-vous que `postIt` a bien un attribut `data-doc-id`
         await deleteDoc(doc(db, "postIts", docId)); // Supprime le post-it de Firestore
         postIt.remove(); // Supprime le post-it de l'interface utilisateur
-
-        // Mise à jour de l'indicateur de notification pour la page
-        const pageRef = doc(db, "pages", currentPageId); // Assurez-vous que `pageId` est correctement défini et accessible
-        await updateDoc(pageRef, {
-          hasNewNotifications: true,
-        });
       } catch (error) {
         console.error(
           "Erreur lors de la suppression du post-it ou de la mise à jour des notifications: ",

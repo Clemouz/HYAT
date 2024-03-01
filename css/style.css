@@ -190,8 +190,7 @@ header {
 }
 
 #pageTitle:hover {
-  text-decoration: underline;
-  color: #38ff9c;
+  color: #a5a5a5;
 }
 
 /* CSS */
@@ -543,7 +542,7 @@ button:hover {
 
 .delete-button:hover {
   /* Effet au survol pour le bouton de fermeture */
-  color: #fff !important; /* Change la couleur de l'icône */
+  color: #ff132a !important; /* Change la couleur de l'icône */
 }
 .edit-button {
   /* Styles de base pour le bouton d'édition */
@@ -552,7 +551,7 @@ button:hover {
 
 .edit-button:hover {
   /* Effet au survol pour le bouton d'édition */
-  color: #38ff9c !important; /* Change la couleur de l'icône */
+  color: #0044ff !important; /* Change la couleur de l'icône */
 }
 
 /* Styles pour le bouton de suppression */
@@ -578,9 +577,7 @@ button:hover {
   font-size: 0;
 }
 
-.delete-post-it:hover {
-  background-color: #ccc;
-}
+
 
 /* Add this to your style.css file */
 .post-it-image {

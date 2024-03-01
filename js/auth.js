@@ -7,14 +7,14 @@ import {
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
   }
 });
 
 const handleSignOut = () => {
   signOut(auth)
     .then(() => {
-      window.location.href = "index.html";
+      window.location.href = "../index.html";
     })
     .catch((error) => {
       console.error("Erreur lors de la déconnexion", error);

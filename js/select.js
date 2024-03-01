@@ -209,18 +209,6 @@ function addPageToHolder(page, pageId) {
   pageElement.className = "page";
   pageElement.textContent = page.name;
 
-  // Créer l'élément de la bulle de notification
-  const notificationBubble = document.createElement("div");
-  notificationBubble.className = "notification-bubble";
-  // Afficher ou masquer la bulle en fonction de la propriété hasNewNotifications
-  notificationBubble.style.display = page.hasNewNotifications
-    ? "block"
-    : "none";
-  notificationBubble.setAttribute("data-page-id", pageId);
-
-  // Ajouter la bulle de notification à l'élément de la page
-  pageElement.appendChild(notificationBubble);
-
   const deleteButton = document.createElement("button");
   deleteButton.className = "delete-button";
   deleteButton.textContent = "✖";
@@ -236,20 +224,9 @@ function addPageToHolder(page, pageId) {
     if (event.target === deleteButton) {
       // Ne faites rien si le bouton de suppression est cliqué
       event.stopPropagation(); // Optionnel, pour éviter que l'événement ne se propage plus loin
-    } else if (page.hasNewNotifications) {
-      // Si le clic est sur l'élément de la page et qu'il y a des notifications
-      const pageRef = doc(db, "pages", pageId);
-      try {
-        await updateDoc(pageRef, { hasNewNotifications: false });
-        notificationBubble.style.display = "none"; // Cachez la bulle de notification
-      } catch (error) {
-        console.error("Erreur lors de la mise à jour du document : ", error);
-      }
-      window.location.href = `page.html?pageId=${pageId}`; // Redirige vers la page liée
-    } else {
-      // Si aucune notification n'est active, redirige simplement vers la page
-      window.location.href = `page.html?pageId=${pageId}`;
     }
+    // Si aucune notification n'est active, redirige simplement vers la page
+    window.location.href = `page.html?pageId=${pageId}`;
   });
 
   pageHolder.appendChild(pageElement);
