@@ -86,19 +86,19 @@ html {
 }
 
 #disconnectButton {
-  background-image: url("../img/disconnect.png");
+  background-image: url("../img/disconnect2.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
   width: 2.2vw;
   height: 2.2vw;
+  color: rgba(221, 221, 221, 0.4);
   cursor: pointer; /* Ajouté pour que l'utilisateur sache qu'il s'agit d'un bouton cliquable */
 }
 
 #disconnectButton:hover {
-  background-color: #0030b5;
-  border: solid 2px #0044ff;
+  background-image: url("../img/disconnect.png");
 }
 #header-right {
   display: flex;
@@ -148,7 +148,7 @@ html {
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition pour l'interaction utilisateur */
   font-family: "LogoFont";
-  font-size: 2vw;
+  font-size: 1.5vw;
   color: #151515;
   overflow: hidden; /* Empêche le texte de déborder */
   white-space: nowrap; /* Empêche le texte de passer à la ligne */
@@ -169,10 +169,11 @@ html {
 /* Popup styles */
 .popup {
   position: fixed;
+  display: none;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.5);
   /* Dark background for the popup */
   color: #fff;
   /* Light text color for better contrast */
@@ -181,8 +182,8 @@ html {
   z-index: 999;
   border-radius: 20px;
   text-align: center;
-  display: none;
-  border: black solid 1px;
+
+  border: white solid 2px;
   /* Removing the border for a cleaner look */
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   /* Adjust shadow for depth */
@@ -190,6 +191,23 @@ html {
   backdrop-filter: blur(
     4px
   ); /* Applique un flou de 5 pixels à l'arrière-plan */
+}
+
+#cancelButton {
+  position: absolute;
+  top: 0px; /* Ajustez selon la marge désirée du haut */
+  right: 10px; /* Ajustez selon la marge désirée de droite */
+  background-color: none; /* Rendre le fond transparent */
+  border: none; /* Supprimer la bordure */
+  cursor: pointer; /* Cursor en forme de main au survol */
+  font-size: 1.2em; /* Ajustez la taille de la croix */
+  width: 1vw;
+  height: 1vw;
+  color: rgba(0, 0, 0, 0.5);
+}
+#cancelButton:hover {
+  color: white; /* Change color on hover */
+  background: none !important;
 }
 
 .popup-content {
@@ -203,13 +221,22 @@ input[type="text"] {
   margin-bottom: 1em;
   font-family: "montserrat";
   font-weight: 600;
+  border-radius: 5px;
+  border: none;
+  color: #484848;
+}
+input[type="text"]:focus {
+  outline: solid 3px #0044ff; /* Utilise outline pour le focus au lieu de changer la bordure */
+}
+input[type="text"]:hover {
+  background-color: #a5a5a5;
 }
 
 /* Button styles */
 button {
   background-color: transparent;
-  color: #202020;
-  border: black solid 2px;
+  border: white solid 2px;
+  color: white;
 
   font-size: 1em;
   /* Ajuste la taille du texte des boutons */
@@ -219,10 +246,6 @@ button {
   cursor: pointer;
   font-family: "montserrat";
   font-weight: 900;
-}
-button:hover {
-  background-color: transparent;
-  backdrop-filter: brightness(1) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
 }
 
 /* Search input styles with glass effect */
@@ -251,7 +274,9 @@ button:hover {
 }
 
 #joinPageButton {
-  background-color: white;
+  background-color: none;
+  border: 2px solid white;
+  color: white;
   height: 50px;
   width: 80px;
   font-size: 1em;
@@ -266,8 +291,18 @@ button:hover {
 }
 
 #joinPageButton:hover {
-  background-color: #0044ff;
-  color: white;
+  background-color: white;
+  color: #151515;
+}
+
+#createPage:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.4
+  ) !important; /* Blanc avec 50% de transparence */
+  color: white !important;
 }
 
 /* Responsive font sizes for smaller screens */
@@ -289,7 +324,6 @@ button:hover {
   display: flex;
 }
 
-
 .delete-button {
   position: absolute;
   top: 0; /* Aligns to the top edge of the page div */
@@ -304,11 +338,12 @@ button:hover {
   border: none; /* No border */
   cursor: pointer;
   text-align: center; /* Centers the 'X' horizontally */
+  color: rgba(0, 0, 0, 0.5);
 }
 .delete-button:hover {
-  color: #ff132a; /* Change color on hover */
-  background-color: none;
-  backdrop-filter: none;
+  color: white; /* Change color on hover */
+  background: none !important;
+  backdrop-filter: none !important;
 }
 
 *:focus {

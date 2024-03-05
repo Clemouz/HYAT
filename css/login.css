@@ -72,12 +72,13 @@ p {
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 2em;
   /* Ajuste la taille du titre */
   color: white;
   margin: 0;
   font-family: "Montserrat";
-  font-weight: bold;
+  font-weight: 900;
+  margin-bottom: 20px;
 }
 .container {
   display: flex;
@@ -91,9 +92,10 @@ h2 {
 .left-section {
   display: flex;
   flex-basis: 67%;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+  flex-direction: row; /* Les enfants sont alignés horizontalement */
+  justify-content: center; /* Centre les enfants horizontalement */
+  align-items: center; /* Centre les enfants verticalement */
+  height: 100%;
   /* Add any additional styling here */
 }
 
@@ -322,7 +324,6 @@ input:hover {
   /* More padding for a spacious look */
   z-index: 999;
   border-radius: 20px;
-  text-align: center;
   display: none;
   gap: 0.5vw;
   /* Adjust shadow for depth */
@@ -332,10 +333,13 @@ input:hover {
   border: solid 3px rgb(255, 255, 255);
   border-radius: 12px;
   width: 20vw;
+  height: 10vw;
   position: relative;
   display: flex; /* Ajouté */
   flex-direction: column; /* Ajouté */
   align-items: center; /* Ajouté */
+  justify-content: center;
+  backdrop-filter: brightness(0.75) blur(10px); /* Applique un flou de 5 pixels à l'arrière-plan */
 }
 
 .close-button {
@@ -378,6 +382,16 @@ button {
 button:hover {
   background-color: transparent;
   backdrop-filter: brightness(0.95) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
+}
+
+#resetPasswordButton:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.4
+  ) !important; /* Blanc avec 50% de transparence */
+  color: white !important;
 }
 
 .register-link {

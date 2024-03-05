@@ -133,11 +133,6 @@ header {
   position: absolute;
 }
 
-/* Style pour le bouton de réglages */
-#settingsButton {
-  /* Vos styles ici */
-}
-
 /* Style pour le menu déroulant caché par défaut */
 .dropdown-content.hidden {
   display: none;
@@ -183,7 +178,7 @@ header {
 }
 
 #pageTitle {
-  font-size: 2em; /* Taille initiale */
+  font-size: 3.5em; /* Taille initiale */
   color: #fff; /* Couleur initiale du texte */
   transition: all 0.3s ease-in-out; /* Assure une transition fluide pour le grossissement et le changement de couleur */
   cursor: pointer; /* Change le curseur lors du survol */
@@ -195,41 +190,31 @@ header {
 
 /* CSS */
 #openPopup {
-  align-items: center;
-  background-color: #fee6e3;
-  border: 2px solid #111;
-  border-radius: 8px;
-  box-sizing: border-box;
-  color: #111;
-  cursor: pointer;
   display: flex;
-  height: 48px;
+  align-items: center;
   justify-content: center;
-  line-height: 24px;
+  position: relative;
+  padding: 12px 35px; /* Ajusté pour prendre en compte les deux déclarations */
+  height: 75px;
   max-width: 100%;
-  padding: 0 25px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  margin: 0; /* Vous pouvez ajuster la marge ici si nécessaire */
-}
-
-#openPopup {
-  position: relative;
-  padding: 12px 35px;
-  background: #ffffff;
+  background-color: #ffffff; /* Préférer le fond blanc spécifié en second */
+  color: #111; /* Couleur du texte */
   font-family: "Montserrat";
   font-weight: 900;
   font-size: 1.5vw;
-  color: #181818;
-  border-radius: 8px;
-  box-shadow: 0 0 0 #f1f1f18c;
-  transition: all 0.3s ease-in-out;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
-  border: black solid 2px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  border: 2px solid #111; /* Bordure noire avec ajustement pour la couleur */
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 #f1f1f18c; /* Ombre box */
+  transition: all 0.3s ease-in-out;
+  margin: 0; /* Marge ajustée comme spécifié */
 }
 
 .star-1 {
@@ -384,7 +369,7 @@ header {
   border-radius: 20px;
   text-align: center;
   display: none;
-  border: black solid 1px;
+  border: black solid 2px;
   /* Removing the border for a cleaner look */
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   /* Adjust shadow for depth */
@@ -408,11 +393,15 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff; /* Ou toute autre couleur de fond */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   z-index: 100; /* Assurez-vous qu'il est au-dessus d'autres éléments */
+  background-color: transparent;
+  border: black solid 2px;
+  backdrop-filter: blur(
+    4px
+  ); /* Applique un flou de 5 pixels à l'arrière-plan */
 }
 
 input[type="text"],
@@ -576,8 +565,6 @@ button:hover {
   /* Adjust to match your image's aspect ratio */
   font-size: 0;
 }
-
-
 
 /* Add this to your style.css file */
 .post-it-image {

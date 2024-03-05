@@ -12,6 +12,8 @@ import {
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
+document.getElementById("cancelButton").textContent = "✖";
+
 document.addEventListener("DOMContentLoaded", function () {
   auth.onAuthStateChanged(async (user) => {
     // Marquez cette fonction comme async
