@@ -1,4 +1,3 @@
-// login.js
 import { auth } from "./firebase.js";
 import {
   onAuthStateChanged,
@@ -14,8 +13,8 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Gestion de la connexion de l'utilisateur
-document.getElementById("login_button").addEventListener("click", function () {
+// Fonction pour gérer la connexion
+function handleLogin() {
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
 
@@ -28,7 +27,30 @@ document.getElementById("login_button").addEventListener("click", function () {
       // Gestion des erreurs de connexion
       alert("Échec de la connexion : " + error.message);
     });
+}
+
+// Gestion de la connexion de l'utilisateur lors du clic sur le bouton
+document.getElementById("login_button").addEventListener("click", handleLogin);
+
+// Ajout de l'écouteur d'événements sur le champ de mot de passe pour gérer la touche Entrée
+document
+  .getElementById("password")
+  .addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Empêcher l'action par défaut
+      handleLogin(); // Appeler directement handleLogin au lieu de simuler un clic
+    }
+  });
+
+// Ajouter l'écouteur d'événements sur le champ email pour gérer la touche Entrée
+document.getElementById("email").addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Empêcher l'action par défaut
+    handleLogin(); // Appeler directement handleLogin
+  }
 });
+
+// Reste du code pour la gestion de réinitialisation du mot de passe...
 
 // Gestion du clic sur le lien de réinitialisation du mot de passe
 document

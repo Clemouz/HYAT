@@ -641,23 +641,29 @@ button:hover {
 }
 
 .modal-content {
-  display: flex; /* Changez ici pour flex si vous voulez utiliser flexbox pour centrer le contenu à l'intérieur */
-  max-width: 90%;
-  max-height: 80vh;
-  left: 40%;
-  top: 10%;
-  position: absolute;
+  display: flex; /* Gardez flex si vous souhaitez utiliser Flexbox pour le contenu */
+  position: fixed;
+  max-width: 60%;
+  max-height: 60%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Ajout pour le centrage précis */
   object-fit: contain;
 }
+
 
 .close {
   position: absolute;
   top: 15px;
   right: 35px;
-  color: #fff;
+  color: rgb(255, 255, 255,0.5);
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;
+}
+.close:hover{
+  color: rgb(255, 255, 255,1);
+
 }
 
 #imageInput {

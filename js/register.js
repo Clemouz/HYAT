@@ -26,22 +26,42 @@ document
       // Utiliser l'UID de l'utilisateur pour stocker des informations supplémentaires dans Firestore
       await setDoc(doc(db, "users", userCredential.user.uid), {
         pseudo: pseudo,
-        email: email, // Optionnel si vous voulez aussi stocker l'email
+        email: email,
       });
+
       // Créer une page "Main" pour l'utilisateur dans Firestore
       const pagesRef = collection(db, "pages");
       const pageDocRef = await addDoc(pagesRef, {
-        userId: userCredential.user.uid, // Stocker l'UID de l'utilisateur
-        name: "Main", // Nom de la page
+        userId: userCredential.user.uid,
+        name: "Main",
         pseudo: pseudo,
-        // Pas besoin de fournir `id` ici, `addDoc` générera automatiquement un ID unique pour le document
       });
       console.log("Page 'Main' créée avec succès avec l'ID : ", pageDocRef.id);
       console.log("Informations de l'utilisateur stockées dans Firestore");
-      // Redirection vers 'index.html' après l'enregistrement
+
+      // Redirection vers 'select.html' après l'enregistrement
       window.location.href = "select.html";
     } catch (error) {
       console.error("Erreur lors de l'inscription : ", error);
       alert("Erreur lors de l'inscription : " + error.message);
     }
   });
+
+// Code pour gérer l'appui sur la touche Entrée dans les champs d'entrée
+function triggerRegisterOnEnter(event) {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Empêcher l'action par défaut de la touche Entrée
+    document.getElementById("register_button").click(); // Simuler un clic sur le bouton d'inscription
+  }
+}
+
+// Ajout de l'écouteur d'événements sur les champs d'entrée
+document
+  .getElementById("pseudo")
+  .addEventListener("keypress", triggerRegisterOnEnter);
+document
+  .getElementById("email")
+  .addEventListener("keypress", triggerRegisterOnEnter);
+document
+  .getElementById("password")
+  .addEventListener("keypress", triggerRegisterOnEnter);
