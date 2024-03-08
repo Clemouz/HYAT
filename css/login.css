@@ -96,7 +96,27 @@ h2 {
   justify-content: center; /* Centre les enfants horizontalement */
   align-items: center; /* Centre les enfants verticalement */
   height: 100%;
+  backdrop-filter: brightness(0.5) blur(10px); /* Applique un flou de 5 pixels à l'arrière-plan */
   /* Add any additional styling here */
+}
+.left-content {
+  display: flex;
+  flex-direction: row; /* Aligns its children (image-text divs) horizontally */
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  height: 80%;
+}
+
+.image-text {
+  display: flex;
+  flex-direction: column; /* Aligns image and text vertically */
+  align-items: center; /* Center aligns items horizontally */
+  justify-content: center;
+  margin: 10px; /* Adds some space between the image-text containers */
 }
 
 .right-section {
@@ -405,4 +425,11 @@ button:hover {
 /* Supprime l'effet de contour pour tous les éléments */
 *:focus {
   outline: none;
+}
+
+img {
+  width: 9vw;
+  height: 9vw;
+  object-fit: cover;
+  /* Couvre toute la div */
 }
