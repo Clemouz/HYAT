@@ -49,7 +49,7 @@ document
         : "";
 
       // Construit le chemin complet vers select.html
-      let pathToSelectHtml = `${basePath}/html/select.html`;
+      let pathToSelectHtml = `/HYAT/html/select.html`;
 
       // Redirige vers select.html
       window.location.href = pathToSelectHtml;
