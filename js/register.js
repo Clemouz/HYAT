@@ -41,6 +41,7 @@ document
 
       // Redirection vers 'select.html' après l'enregistrement
       window.location.href = "../html/select.html";
+
     } catch (error) {
       console.error("Erreur lors de l'inscription : ", error);
       alert("Erreur lors de l'inscription : " + error.message);
