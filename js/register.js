@@ -40,8 +40,19 @@ document
       console.log("Informations de l'utilisateur stockées dans Firestore");
 
       // Redirection vers 'select.html' après l'enregistrement
-      window.location.href = "../html/select.html";
+      // Nom de votre repository GitHub
+      const repoName = "nom-de-votre-repo";
 
+      // Construit le chemin de base en fonction de l'emplacement actuel
+      let basePath = window.location.href.includes(repoName)
+        ? `/${repoName}`
+        : "";
+
+      // Construit le chemin complet vers select.html
+      let pathToSelectHtml = `${basePath}/html/select.html`;
+
+      // Redirige vers select.html
+      window.location.href = pathToSelectHtml;
     } catch (error) {
       console.error("Erreur lors de l'inscription : ", error);
       alert("Erreur lors de l'inscription : " + error.message);
