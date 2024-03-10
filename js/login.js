@@ -9,7 +9,7 @@ import {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // Redirection si l'utilisateur est déjà connecté
-    window.location.href = "select.html";
+    window.location.href = "/HYAT/html/select.html";
   }
 });
 
@@ -21,7 +21,7 @@ function handleLogin() {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Connexion réussie, redirection vers la page d'accueil ou tableau de bord
-      window.location.href = "select.html";
+      window.location.href = "/HYAT/html/select.html";
     })
     .catch((error) => {
       // Gestion des erreurs de connexion
