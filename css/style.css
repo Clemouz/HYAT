@@ -67,8 +67,8 @@ h2 {
   /* Ajuste la taille du titre */
   color: #151515;
   margin-left: 1%;
-  font-family: "Montserrat";
-  font-weight: bold; /* Utilisez le nom de la police défini dans @font-face */
+  font-family: "logofont";
+  font-weight: 200; /* Utilisez le nom de la police défini dans @font-face */
 }
 p {
   font-size: 1.2em;
@@ -116,6 +116,7 @@ header {
   padding-right: 50px; /* Utilisez le même padding que celui du header pour équilibrer l'espacement */
   height: 100%;
   margin-right: 50px;
+  gap: 2vw;
 }
 
 .navbuttons {
@@ -178,7 +179,7 @@ header {
 }
 
 #pageTitle {
-  font-size: 3.5em; /* Taille initiale */
+  font-size: 2.5vw; /* Taille initiale */
   color: #fff; /* Couleur initiale du texte */
   transition: all 0.3s ease-in-out; /* Assure une transition fluide pour le grossissement et le changement de couleur */
   cursor: pointer; /* Change le curseur lors du survol */
@@ -195,7 +196,8 @@ header {
   justify-content: center;
   position: relative;
   padding: 12px 35px; /* Ajusté pour prendre en compte les deux déclarations */
-  height: 75px;
+  height: 2.5vw;
+  min-height: 1.5vw;
   max-width: 100%;
   background-color: #ffffff; /* Préférer le fond blanc spécifié en second */
   color: #111; /* Couleur du texte */
@@ -406,7 +408,7 @@ header {
 
 input[type="text"],
 textarea {
-  background-color: rgba(185, 185, 185, 0.5);
+  background-color: rgba(4, 4, 4, 0.5);
   backdrop-filter: brightness(0.5) blur(4px); /* Applique un flou de 5 pixels à l'arrière-plan */
   /* Darker background for inputs */
   color: #fff;
@@ -421,6 +423,13 @@ textarea {
   outline: none;
   box-sizing: border-box;
   /* Include padding in width calculation */
+}
+
+#titleInput::placeholder,
+#descriptionInput::placeholder,
+#editTitleInput::placeholder,
+#editDescriptionInput::placeholder {
+  color: #b1b1b1; /* Couleur uniforme pour tous les placeholders */
 }
 
 .close-button {
@@ -488,7 +497,7 @@ button:hover {
 .post-it {
   background-color: #fee9a6;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 15px;
   cursor: move;
   height: auto;
   user-select: none;
@@ -502,6 +511,7 @@ button:hover {
   /* permet de s'assurer que le texte ne dépasse pas le post-it */
   box-shadow: 0px 0px 25px rgba(88, 88, 88, 0.5);
   transition: transform 0.2s ease-in-out; /* Ajout de la transition pour une animation douce */
+  border: solid 2px black;
 }
 
 .post-it:hover {
@@ -527,11 +537,12 @@ button:hover {
   /* Styles de base pour le bouton de fermeture */
   cursor: pointer;
   transition: transform 0.3s ease;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .delete-button:hover {
   /* Effet au survol pour le bouton de fermeture */
-  color: #ff132a !important; /* Change la couleur de l'icône */
+  color: white !important; /* Change la couleur de l'icône */
 }
 .edit-button {
   /* Styles de base pour le bouton d'édition */
@@ -575,22 +586,15 @@ button:hover {
   border-radius: 10px;
 }
 
-/* Conteneur pour les boutons de navigation du fond */
-.nav-buttons {
-  position: absolute;
-  right: 1rem;
-  /* Distance du bord droit du header */
-  bottom: 10px;
-  /* Distance du bord inférieur du header */
-  display: flex;
-  /* Pour aligner les boutons côte à côte */
-}
-
 /* Boutons de navigation du fond */
 #prevBackground,
 #nextBackground {
-  width: 30px;
-  height: 30px;
+  padding: 1vw; /* Utilisez vw pour le padding pour un ajustement relatif */
+  margin: 1vh; /* vh peut être utilisé pour les marges verticales */
+  width: 1vw; /* Ajustez la largeur en fonction de la largeur de la vue */
+  min-width: 5vw;
+  height: 1vh; /* Ajustez la hauteur en fonction de la hauteur de la vue */
+  min-height: 0.5vh;
   border-radius: 15%;
   background-color: white;
   color: #202020;
@@ -600,7 +604,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 1vw;
   background-repeat: no-repeat;
   background-position: center;
   /* Espace entre les boutons */
@@ -651,19 +655,17 @@ button:hover {
   object-fit: contain;
 }
 
-
 .close {
   position: absolute;
   top: 15px;
   right: 35px;
-  color: rgb(255, 255, 255,0.5);
+  color: rgb(255, 255, 255, 0.5);
   font-size: 40px;
   font-weight: bold;
   cursor: pointer;
 }
-.close:hover{
-  color: rgb(255, 255, 255,1);
-
+.close:hover {
+  color: rgb(255, 255, 255, 1);
 }
 
 #imageInput {
@@ -676,9 +678,22 @@ button:hover {
   font-weight: 600;
   font-size: 1.2vw; /* Adjust font size to match the 'Create' button */
 }
+#editImageInput {
+  color: #202020;
+  border: black solid 2px;
+  padding: 0.5em 1em; /* Adjust padding to match the 'Create' button */
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 1.2vw; /* Adjust font size to match the 'Create' button */
+}
 
 /* Hide the default file input styles and make it look like a button */
 #imageInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+#editImageInput::-webkit-file-upload-button {
   visibility: hidden;
 }
 #imageInput::before {
@@ -697,8 +712,27 @@ button:hover {
   font-family: "Montserrat", sans-serif;
   font-size: 1em;
 }
+#editImageInput::before {
+  content: "Select Image";
+  display: inline-block;
+  background: white;
+  border: black solid 2px;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  font-weight: 900;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+}
 
 #imageInput:hover::before {
+  border-color: black;
+}
+#editImageInput:hover::before {
   border-color: black;
 }
 /* Supprime l'effet de contour pour tous les éléments */

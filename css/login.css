@@ -80,6 +80,15 @@ h2 {
   font-weight: 900;
   margin-bottom: 20px;
 }
+h3 {
+  font-size: 1.3em;
+  /* Ajuste la taille du titre */
+  color: white;
+  margin: 0;
+  font-family: "Montserrat";
+  font-weight: normal;
+  margin-top: 25px;
+}
 .container {
   display: flex;
   width: 100%;
@@ -96,7 +105,7 @@ h2 {
   justify-content: center; /* Centre les enfants horizontalement */
   align-items: center; /* Centre les enfants verticalement */
   height: 100%;
-  backdrop-filter: brightness(0.5) blur(10px); /* Applique un flou de 5 pixels à l'arrière-plan */
+  backdrop-filter: brightness(0.8) blur(10px); /* Applique un flou de 5 pixels à l'arrière-plan */
   /* Add any additional styling here */
 }
 .left-content {
@@ -109,6 +118,7 @@ h2 {
   border-radius: 10px;
   width: 80%;
   height: 80%;
+  margin-left: 4%;
 }
 
 .image-text {
@@ -116,7 +126,7 @@ h2 {
   flex-direction: column; /* Aligns image and text vertically */
   align-items: center; /* Center aligns items horizontally */
   justify-content: center;
-  margin: 10px; /* Adds some space between the image-text containers */
+  margin: 2.6vw; /* Adds some space between the image-text containers */
 }
 
 .right-section {

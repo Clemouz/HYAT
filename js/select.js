@@ -80,11 +80,9 @@ document
       return;
     }
 
-    // Vérifier si la page existe
     const pageRef = doc(db, "pages", pageId);
     const pageSnap = await getDoc(pageRef);
     if (pageSnap.exists()) {
-      // Vérifiez si l'utilisateur a déjà cette page dans son pageHolder
       const userPageRef = collection(db, "userPages");
       const q = query(
         userPageRef,
@@ -93,20 +91,20 @@ document
       );
       const querySnapshot = await getDocs(q);
 
+      console.log(
+        `Résultats trouvés pour l'utilisateur et la pageId : ${querySnapshot.docs.length}`
+      ); // Logging pour diagnostiquer
+
       if (querySnapshot.empty) {
-        // Ajouter la page au pageHolder de l'utilisateur
         await addDoc(userPageRef, {
           userId: auth.currentUser.uid,
           pageId: pageId,
         });
         console.log("Page ajoutée avec succès à votre pageHolder.");
-        // Rediriger l'utilisateur vers la page
-        window.location.href = `page.html?pageId=${pageId}`;
       } else {
         console.log("Vous avez déjà accès à cette page.");
-        // Optionnel : Rediriger l'utilisateur vers la page s'il l'a déjà rejointe
-        window.location.href = `page.html?pageId=${pageId}`;
       }
+      window.location.href = `page.html?pageId=${pageId}`;
     } else {
       alert("Page non trouvée.");
     }
